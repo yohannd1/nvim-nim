@@ -3,9 +3,12 @@ Attempt at writing an async outline/structure listing/navigator for files/module
 
 # TODO
 - [ ] Syntax
+    - [ ] Keywords
+    - [ ] Operator precedence different colors
 - [ ] Indendation
 - [ ] Compiler support
-- [ ] Autocompletion
+    - [ ] Make for errors
+    - [ ] Autocompletion
 - [x] Nimsuggest
     - [x] Usages
     - [x] Jump to definition
@@ -21,7 +24,7 @@ Attempt at writing an async outline/structure listing/navigator for files/module
     - [ ] NimRenameSymbolProject
 
 # TODO For advanced
-- [ ] Syntax with nim compiler highlight
+- [ ] Syntax with nim compiler highlight using matchaddpos ??
 - [ ] Outline with unite
 - [ ] Outline with proper tagbar
 - [ ] Usages with unite
