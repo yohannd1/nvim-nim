@@ -1,4 +1,4 @@
-# nvim-structure
+# nvim-nim
 Attempt at writing an async outline/structure listing/navigator for files/modules.
 
 # TODO
