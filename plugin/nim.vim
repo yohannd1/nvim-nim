@@ -106,6 +106,7 @@ function! s:NimHighlighter.on_exit()
     let b:old_highlights = new_highlights
 endfunction
 
+
 " NimSuggest
 let s:NimSuggest = {}
 
@@ -161,19 +162,6 @@ function! s:JumpFromQuickfix(shouldReturn)
 endfunction
 
 
-" function! s:Handles.rename(data)
-"     for entry in a:data
-"         if len(entry) == 0
-"             continue
-"         endif
-"         let [ctype, context, fullname, type, filename, line, column, doc, random] = split(entry, "	")
-"         if !s:findInProject && filename != expand("%:p")
-"             continue
-"         endif
-"     endfor
-" endfunction
-
-
 " Definitions
 let s:DefinitionImpl = {}
 function! s:DefinitionImpl.run(data)
@@ -190,11 +178,11 @@ endfunction
 " Outline
 let s:OutlineImpl = {}
 function! s:OutlineImpl.run(data)
-    for entry in a:data.lines
-        if len(entry) == 0
+    for line in a:data.lines
+        if len(line) == 0
             continue
         endif
-        let [_, node, fullname, type, filename, line, column, doc, random] = split(entry, "	")
+        let [_, node, fullname, type, filename, line, column, doc, random] = split(line, "	")
         let name = join(split(fullname, "\\.")[1:], ".")
         call setqflist([{
                     \ 'filename': filename,
@@ -217,12 +205,12 @@ endfunction
 " Usage
 let s:UsagesImpl = {}
 function! s:UsagesImpl.run(data)
-    for entry in a:data.lines
-        if len(entry) == 0
+    for line in a:data.lines
+        if len(line) == 0
             continue
         endif
 
-        let [ctype, context, fullname, type, filename, line, column, doc, random] = split(entry, "	")
+        let [ctype, context, fullname, type, filename, line, column, doc, random] = split(line, "	")
         if !s:findInProject && filename != expand("%:p")
             continue
         endif
@@ -247,13 +235,47 @@ function! s:NimUsages(findInProject)
     call s:NimSuggest.New("use", 1, s:UsagesImpl)
 endfunction
 
-function! s:NimRenameSymbol()
-    let newName = input("Rename symbol: ", expand("<cword>"))
-    call s:AskNimsuggest("rename", 1, 0)
+
+function! s:FirstNonEmpty(lines)
+    for line in a:lines
+        if len(line) > 0
+            return line
+        endif
+    endfor
 endfunction
 
 
-function! s:NimRenameSymbolProject()
+let s:RenameImpl = {}
+function! s:RenameImpl.run(data)
+    if len(a:data.lines) == 0
+        return
+    endif
+
+    let oldName = split(split(s:FirstNonEmpty(a:data.lines), "	")[2], "\\.")[-1]
+    let newName = input("Rename symbol: ", oldName)
+
+    for line in a:data.lines
+        if len(line) == 0
+            continue
+        endif
+
+        let [_, _, _, _, filename, line, column, _, _] = split(line, "	")
+        if !s:findInProject && filename != expand("%:p")
+            continue
+        endif
+
+        if filename != expand("%:p")
+            execute ":e " . expand("%:p")
+        endif
+
+        let left = getline(line)[0:column - 1]
+        let right = getline(line)[column + len(oldName):-1]
+        call setline(line, left . newName . right)
+    endfor
+endfunction
+function! s:NimRenameSymbol(inProject)
+    let s:findInProject = a:inProject
+    call s:NimSuggest.New("use", 1, s:RenameImpl)
 endfunction
 
 
@@ -290,8 +312,8 @@ command! NimInfo                :call s:NimInfo()
 command! NimUsages              :call s:NimUsages(0)
 command! NimUsagesProject       :call s:NimUsages(1)
 command! NimOutline             :call s:NimOutline()
-command! NimRenameSymbol        :call s:NimRenameSymbol()
-command! NimRenameSymbolProject :call s:NimRenameSymbolProject()
+command! NimRenameSymbol        :call s:NimRenameSymbol(0)
+command! NimRenameSymbolProject :call s:NimRenameSymbol(1)
 command! NimDebug               :call s:NimDebug()
 
 function! s:hlGuard()
