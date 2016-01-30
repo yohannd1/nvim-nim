@@ -20,7 +20,7 @@ Attempt at writing an async outline/structure listing/navigator for files/module
     - [x] NimInfo
     - [x] NimUsages
     - [x] NimUsagesProject
-    - [ ] NimRenameSymbol
+    - [x] NimRenameSymbol
     - [ ] NimRenameSymbolProject
 
 # TODO For advanced
@@ -30,3 +30,6 @@ Attempt at writing an async outline/structure listing/navigator for files/module
 - [ ] Usages with unite
 - [ ] Autocompletion with ycm
 - [ ] Autocompletion with deoplete
+
+# BUGS
+- [ ] Not all lines are read from stdin for some reason with job-control
