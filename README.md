@@ -1,19 +1,30 @@
 # nvim-nim
-Attempt at writing an async outline/structure listing/navigator for files/modules.
+Nim support for Neovim
 
 # TODO
+- [ ] Add global options for user
+- [ ] Doc
+    - [ ] Bindings
+    - [ ] Options
+    - [ ] Commands
+    - [ ] Using with other plugins
 - [ ] Syntax
-    - [ ] Keywords
-    - [ ] Operator precedence different colors
+    - [x] Keywords
+    - [x] Operator precedence different colors
+    - [x] Numbers
+    - [ ] String
+    - [ ] Multiline comments
+    - [ ] Highlight variable names semantically
 - [ ] Indendation
 - [ ] Compiler support
     - [ ] Make for errors
-    - [ ] Autocompletion
+    - [ ] Omnicomplete
 - [x] Nimsuggest
     - [x] Usages
     - [x] Jump to definition
     - [x] Show typeinfo
     - [x] Outline
+    - [x] Highlight
 - [x] Commands
     - [x] NimDefinition
     - [x] NimOutline
@@ -22,15 +33,14 @@ Attempt at writing an async outline/structure listing/navigator for files/module
     - [x] NimUsagesProject
     - [x] NimRenameSymbol
     - [ ] NimRenameSymbolProject
-
-# TODO For advanced
-- [ ] Syntax with nim compiler highlight using matchaddpos ??
-- [ ] Highlight variable names semantically
-- [ ] Outline with unite
-- [ ] Outline with proper tagbar
-- [ ] Usages with unite
-- [ ] Autocompletion with ycm
-- [ ] Autocompletion with deoplete
+- [ ] IDE features
+    - [ ] Auto complete modules
+    - [ ] Outline with unite
+    - [ ] Outline with a proper tagbar
+    - [ ] Usages with unite
+    - [ ] Autocompletion with ycm
+    - [ ] Autocompletion with deoplete
+    - [ ] REPL interaction
 
 # BUGS
 - [ ] Not all lines are read from stdin for some reason with job-control

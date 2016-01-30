@@ -13,11 +13,11 @@ function! s:InfoImpl.run(data)
         let [_, ctype, name, type, filename, l, c, doc] = split(a:data.lines[0], "	")
         echohl Function | echon "Type"
         echohl Comment | echon ": "
-        echohl Statement | echon type
+        echohl Typedef | echon type
     endif
 endfunction
 
 
-function! feature#info#run()
+function! features#info#run()
     call suggest#New("def", 0, s:InfoImpl)
 endfunction

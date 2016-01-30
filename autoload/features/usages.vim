@@ -38,6 +38,3 @@ function! features#usages#run(findInProject)
     let s:findInProject = a:findInProject
     call suggest#New("use", 1, s:UsagesImpl)
 endfunction
-
-
-

@@ -90,7 +90,7 @@ endfunction
 
 
 function! highlighter#guard()
-    " if line("$") + 0 < 500
-    "     call highlighter#New()
-    " endif
+    if line("$") + 0 < 500
+        call highlighter#New()
+    endif
 endfunction

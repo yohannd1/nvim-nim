@@ -27,7 +27,7 @@ function! util#JumpToLocation(file, line, col)
         execute ":e " . a:file
     endif
     execute ":" . a:line
-    execute ":norm " . a:col . "|"
+    execute ":norm " . (a:col - 1) . "|"
 endfunction
 
 
