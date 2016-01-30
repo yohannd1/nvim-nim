@@ -1,28 +1,8 @@
 if exists("b:loaded")
-  " finish
-else
-    function! s:NimsuggestProxy(id, data, event)
-        call s:HandleNimsuggestProxy(a:id, a:data, a:event)
-    endfunction
+    finish
 endif
 let b:loaded = 1
-let b:hmatches = []
 
-function! s:HandleNimsuggestProxy(id, data, event)
-    if a:event == 'stdout'
-        if len(a:data[0]) == 0
-        elseif !(a:data[0] =~ "^usage")
-            call s:HandleNimsuggest(a:data, s:type)
-        endif
-    elseif a:event == 'exit'
-        if s:type == 'highlight'
-            for m in b:hmatches
-                call matchdelete(m)
-            endfor
-            let b:hmatches = []
-        endif
-    endif
-endfunction
 
 " Check dependedncies
 function! s:CheckDependency(command)
@@ -37,214 +17,264 @@ let s:nim = s:CheckDependency("nim")
 let s:nimble = s:CheckDependency("nimble")
 let s:nimsuggest = s:CheckDependency("nimsuggest")
 let s:bash = s:CheckDependency("bash")
-let s:nimserver = 0
-let s:type = ''
 let s:findInProject = 1
 
+
+" Nim highlighter
+let s:NimHighlighter = {}
+
+function! s:NimHighlighter.New()
+    let result = copy(self)
+    let result.lines = []
+    let result.job = jobstart([s:nimsuggest, '--v2', '--stdin', expand("%:p")], result)
+    let result.file = expand("%:p")
+    let tempfile = result.file . ".temp"
+    call writefile(getline(1, '$'), tempfile)
+    call jobsend(result.job, "highlight " . result.file . ";" . tempfile . ":1:1\nquit\n") 
+    if !exists("b:old_highlights")
+        let b:old_highlights = []
+    endif
+    return result
+endfunction
+
+function! s:NimHighlighter.on_stdout(job, chunk)
+    if len(a:chunk[0]) != 0 && !(a:chunk[0] =~ "^usage")
+        call extend(self.lines, a:chunk)
+    endif
+endfunction
+
+function! s:NimHighlighter.on_stderr(job, chunk)
+endfunction
+
+function! s:NimHighlighter.on_exit()
+    if self.file != expand("%:p")
+        return
+    endif
+    let highlights = {
+                \ 'skProc':         ["Function", []],
+                \ 'skTemplate':     ["PreProc", []],
+                \ 'skType':         ["Type", []],
+                \ 'skMacro':        ["Macro", []],
+                \ 'skMethod':       ["Function", []],
+                \ 'skField':        ["Identifier", []],
+                \ 'skAlias':        ["Type", []],
+                \ 'skConditional':  ["Conditional", []],
+                \ 'skConst':        ["Constant", []],
+                \ 'skConverter':    ["Function", []],
+                \ 'skDynLib':       ["Include", []],
+                \ 'skEnumField':    ["Identifier", []],
+                \ 'skForVar':       ["Special", []],
+                \ 'skGenericParam': ["Typedef", []],
+                \ 'skGlobalVar':    ["Constant", []],
+                \ 'skGlobalLet':    ["Constant", []],
+                \ 'skIterator':     ["Keyword", []],
+                \ 'skLabel':        ["Identifier", []],
+                \ 'skLet':          ["Constant", []],
+                \ 'skModule':       ["Include", []],
+                \ 'skPackage':      ["Define", []],
+                \ 'skParam':        ["Identifier", []],
+                \ 'skResult':       ["Keyword", []],
+                \ 'skStub':         ["PreCondit", []],
+                \ 'skTemp':         ["Identifier", []],
+                \ 'skUnknown':      ["Error", []],
+                \ 'skVar':          ["Constant", []]
+                \ }
+
+    for line in self.lines
+        if len(line) == 0
+            continue
+        endif
+        let p = split(line, "	")
+        let line = p[2] + 0
+        let c = p[3] + 1
+        let s = p[4] + 0
+        if getline(line)[c - 1] == '*'
+            let c -= s
+        endif
+        call add(highlights[p[1]][1], [line, c, s])
+    endfor
+
+    let new_highlights = []
+    for [k, v] in items(highlights)
+        call add(new_highlights, matchaddpos(v[0], v[1]))
+    endfor
+
+    for m in b:old_highlights
+        call matchdelete(m)
+    endfor
+
+    let b:old_highlights = new_highlights
+endfunction
+
+" NimSuggest
+let s:NimSuggest = {}
+
+function! s:NimSuggest.New(command, useV2, handler)
+    let result = copy(self)
+    let result.lines = []
+    let result.file = expand("%:p")
+    let result.tempfile = result.file . ".temp"
+    let result.line = line(".")
+    let result.col = col(".")
+    let result.handler = a:handler
+    " if a:useTempFile
+    "     call writefile(getline(1, '$'), result.tempfile)
+    " endif
+    " let nimcom = completion . " " . file . (a:useTempFile ? (";" . result.tempfile) : "") . ":" . line . ":" . col
+
+    let result.job = jobstart([s:nimsuggest, (a:useV2 ? '--v2' : ''), '--stdin', result.file], result)
+    call jobsend(result.job, a:command . " " . result.file . ":" . result.line . ":" . result.col . "\n") 
+    call jobsend(result.job, "quit\n") 
+    return result
+endfunction
+
+function! s:NimSuggest.on_stdout(job, chunk)
+    if len(a:chunk[0]) != 0 && !(a:chunk[0] =~ "^usage")
+        call extend(self.lines, a:chunk)
+    endif
+endfunction
+
+function! s:NimSuggest.on_stderr()
+endfunction
+
+function! s:NimSuggest.on_exit()
+    call self.handler.run(self)
+endfunction
+
+
 function! s:JumpToLocation(file, line, col)
-    execute ":e " . a:file
+    if expand("%:p") != a:file
+        execute ":e " . a:file
+    endif
     execute ":" . a:line
     execute ":norm " . a:col . "|"
 endfunction
 
-function! s:JumpFromQuickfix()
+function! s:JumpFromQuickfix(shouldReturn)
     let [file, location, _] = split(getline(line(".")), "|")
     let [l, c] = split(location, " col ")
     wincmd p
     call s:JumpToLocation(file, l, c)
+    if a:shouldReturn
+        wincmd p
+    endif
 endfunction
 
-function! s:HandleNimsuggest(data, type)
-    if a:type == 'outline'
-        for entry in a:data
-            if len(entry) == 0
-                continue
-            endif
 
-            let [_, node, fullname, type, filename, line, column, doc, random] = split(entry, "	")
-            let name = join(split(fullname, "\\.")[1:], ".")
-            call setqflist([{
-                        \ 'filename': filename,
-                        \ 'lnum': line,
-                        \ 'col': column + 1,
-                        \ 'text': node . " : " . name }],
-                        \ 'a')
-        endfor
-        copen
-        nnoremap <buffer><silent> <return> :call <SID>JumpFromQuickfix()<cr>
+" function! s:Handles.rename(data)
+"     for entry in a:data
+"         if len(entry) == 0
+"             continue
+"         endif
+"         let [ctype, context, fullname, type, filename, line, column, doc, random] = split(entry, "	")
+"         if !s:findInProject && filename != expand("%:p")
+"             continue
+"         endif
+"     endfor
+" endfunction
 
-    elseif a:type == 'highlight'
-        let highlights = {
-                    \ 'skAlias':        ["Type", []],
-                    \ 'skConditional':  ["Conditional", []],
-                    \ 'skConst':        ["Constant", []],
-                    \ 'skConverter':    ["Function", []],
-                    \ 'skDynLib':       ["Include", []],
-                    \ 'skEnumField':    ["Identifier", []],
-                    \ 'skField':        ["Identifier", []],
-                    \ 'skForVar':       ["Special", []],
-                    \ 'skGenericParam': ["Typedef", []],
-                    \ 'skGlobalVar':    ["Constant", []],
-                    \ 'skGlobalLet':    ["Constant", []],
-                    \ 'skIterator':     ["Keyword", []],
-                    \ 'skLabel':        ["Identifier", []],
-                    \ 'skLet':          ["Constant", []],
-                    \ 'skMacro':        ["Macro", []],
-                    \ 'skMethod':       ["Function", []],
-                    \ 'skModule':       ["Include", []],
-                    \ 'skPackage':      ["Define", []],
-                    \ 'skParam':        ["Identifier", []],
-                    \ 'skProc':         ["Function", []],
-                    \ 'skResult':       ["Keyword", []],
-                    \ 'skStub':         ["PreCondit", []],
-                    \ 'skTemp':         ["Identifier", []],
-                    \ 'skTemplate':     ["PreProc", []],
-                    \ 'skType':         ["Type", []],
-                    \ 'skUnknown':      ["Error", []],
-                    \ 'skVar':          ["Constant", []]
-                    \ }
 
-        for line in a:data
-            if len(line) == 0
-                continue
-            endif
-            " let [_, type, line, column, size] = split(line, "	")
-            let p = split(line, "	")
-            call add(highlights[p[1]][1], [p[2] + 0, p[3] + 1, p[4] + 0])
-        endfor
-
-        for [k, v] in items(highlights)
-            call add(b:hmatches, matchaddpos(v[0], v[1]))
-        endfor
-
-    elseif a:type == 'info'
-        let [_, ctype, name, type, filename, l, c, doc] = split(a:data[0], "	")
-        if type != ""
-            echo "Type: " . type
-        else
-            echo "No information found"
-        endif
-
-    elseif a:type == 'def'
-        let [_, _, _, _, filename, l, c, _] = split(a:data[0], "	")
+" Definitions
+let s:DefinitionImpl = {}
+function! s:DefinitionImpl.run(data)
+    if len(a:data.lines) > 0
+        let [_, _, _, _, filename, l, c, _] = split(a:data.lines[0], "	")
         call s:JumpToLocation(filename, l, c + 1)
-
-    elseif a:type == 'use'
-        for entry in a:data
-            if len(entry) == 0
-                continue
-            endif
-
-            let [ctype, context, fullname, type, filename, line, column, doc, random] = split(entry, "	")
-            if !s:findInProject && filename != expand("%")
-                continue
-            endif
-
-            let module = split(fullname, '\.')[0]
-            let name = split(fullname, '\.')[-1]
-            call setqflist([{
-                        \ 'filename': filename,
-                        \ 'lnum': line,
-                        \ 'col': column + 1,
-                        \ 'text': ctype . ": " . name . " (" . fullname . ")"}],
-                        \ 'a')
-        endfor
-        copen
-        nnoremap <buffer><silent> <return> :call <SID>JumpFromQuickfix()<cr>
-
-    else
-        echoerr "No support for " . a:type
     endif
 endfunction
-
-function! s:Cleanup()
+function! s:NimGoToDefinition()
+    call s:NimSuggest.New("def", 0, s:DefinitionImpl)
 endfunction
 
-" Internal implementation
-function! s:AskNimsuggest(command, useV2, useTempFile)
-    let s:result = []
-    let file = expand("%:p")
-    let tempfile = file . ".temp"
-    let line = line(".")
-    let col = col(".")
 
-    let completion = a:command
-    if completion == "info"
-        let completion = "def"
-    endif
-
-    if a:useTempFile
-        call writefile(getline(1, '$'), tempfile)
-    endif
-
-    let nimcom = completion . " " . file . (a:useTempFile ? (";" . tempfile) : "") . ":" . line . ":" . col
-    let s:type = a:command
-
-    call s:NimStartServer(a:useV2, file)
-    call jobsend(s:nimserver, nimcom . "\n") 
+" Outline
+let s:OutlineImpl = {}
+function! s:OutlineImpl.run(data)
+    for entry in a:data.lines
+        if len(entry) == 0
+            continue
+        endif
+        let [_, node, fullname, type, filename, line, column, doc, random] = split(entry, "	")
+        let name = join(split(fullname, "\\.")[1:], ".")
+        call setqflist([{
+                    \ 'filename': filename,
+                    \ 'lnum': line,
+                    \ 'col': column + 1,
+                    \ 'text': node . " : " . name }],
+                    \ 'a')
+    endfor
+    copen
+    nnoremap <buffer><silent> <return> :call <SID>JumpFromQuickfix(0)<cr>
+    nnoremap <buffer><silent> o :call <SID>JumpFromQuickfix(1)<cr>
 endfunction
-
-" Public API
-function! s:NotImplementedYet()
-  echo "Not implemented yet"
-endfunction
-
-function! s:NimJumpToDefinition()
-    call s:AskNimsuggest("def", 0, 0)
-endfunction
-
 function! s:NimOutline()
     cclose
     call setqflist([])
-    call s:AskNimsuggest("outline", 1, 0)
+    call s:NimSuggest.New("outline", 1, s:OutlineImpl)
 endfunction
 
+
+" Usage
+let s:UsagesImpl = {}
+function! s:UsagesImpl.run(data)
+    for entry in a:data.lines
+        if len(entry) == 0
+            continue
+        endif
+
+        let [ctype, context, fullname, type, filename, line, column, doc, random] = split(entry, "	")
+        if !s:findInProject && filename != expand("%:p")
+            continue
+        endif
+
+        let module = split(fullname, '\.')[0]
+        let name = split(fullname, '\.')[-1]
+        call setqflist([{
+                    \ 'filename': filename,
+                    \ 'lnum': line,
+                    \ 'col': column + 1,
+                    \ 'text': ctype . ": " . name . " (" . fullname . ")"}],
+                    \ 'a')
+    endfor
+    copen
+    nnoremap <buffer><silent> <return> :call <SID>JumpFromQuickfix(0)<cr>
+    nnoremap <buffer><silent> o :call <SID>JumpFromQuickfix(1)<cr>
+endfunction
 function! s:NimUsages(findInProject)
     cclose
     call setqflist([])
     let s:findInProject = a:findInProject
-    call s:AskNimsuggest("use", 1, 0)
+    call s:NimSuggest.New("use", 1, s:UsagesImpl)
 endfunction
 
 function! s:NimRenameSymbol()
-    call s:NotImplementedYet()
+    let newName = input("Rename symbol: ", expand("<cword>"))
+    call s:AskNimsuggest("rename", 1, 0)
 endfunction
+
 
 function! s:NimRenameSymbolProject()
-    call s:NotImplementedYet()
 endfunction
 
-function! s:NimStartServer(useV2, file)
-    if s:nimserver > 0
-        call s:NimStopServer()
-    endif
 
-    let s:nimserver = jobstart([s:nimsuggest, (a:useV2 ? '--v2' : ''), '--stdin', a:file], {
-                \ 'on_stdout': 's:NimsuggestProxy',
-                \ 'on_stderr': 's:NimsuggestProxy',
-                \ 'on_exit': 's:NimsuggestProxy'
-                \ })
-endfunction
-
-function! s:NimStatusServer()
-    if s:nimserver <= 0
-        echo "No nimsuggest server running"
+" Info
+let s:InfoImpl = {}
+function! s:InfoImpl.run(data)
+    if len(a:data.lines) == 0
+        echo "No information found"
     else
-        echo "Nimsuggest running with id: " . s:nimserver
+        let [_, ctype, name, type, filename, l, c, doc] = split(a:data.lines[0], "	")
+        echohl Function | echon "Type"
+        echohl Comment | echon ": "
+        echohl Statement | echon type
     endif
 endfunction
-
-function! s:NimStopServer()
-    if s:nimserver > 0
-        call jobstop(s:nimserver)
-        let s:nimserver = 0
-    endif
-endfunction
-
 function! s:NimInfo()
-    call s:AskNimsuggest("info", 0, 0)
+    call s:NimSuggest.New("def", 0, s:InfoImpl)
 endfunction
 
+
+" Config
 function! s:NimDebug()
     echo "Nim tools debugging info"
     echo "------------------------"
@@ -255,20 +285,20 @@ function! s:NimDebug()
     echo "Nimsuggest: " . s:nimsuggest
 endfunction
 
-command! NimDefinition          :call s:NimJumpToDefinition()
+command! NimDefinition          :call s:NimGoToDefinition()
 command! NimInfo                :call s:NimInfo()
 command! NimUsages              :call s:NimUsages(0)
 command! NimUsagesProject       :call s:NimUsages(1)
 command! NimOutline             :call s:NimOutline()
-command! NimServerStart         :call s:NimStartServer()
-command! NimServerStop          :call s:NimStopServer()
 command! NimRenameSymbol        :call s:NimRenameSymbol()
 command! NimRenameSymbolProject :call s:NimRenameSymbolProject()
 command! NimDebug               :call s:NimDebug()
 
-function! s:HighlightSyntax(useTempFile)
-    call s:AskNimsuggest("highlight", 1, a:useTempFile)
+function! s:hlGuard()
+    if line("$") + 0 < 500
+        call s:NimHighlighter.New()
+    endif
 endfunction
 
-autocmd! InsertLeave,CursorHold,CursorHoldI,TextChanged,InsertEnter *.nim call s:HighlightSyntax(1)
-autocmd! BufReadPost,BufWritePost *.nim call s:HighlightSyntax(0)
+autocmd! CursorHold,InsertLeave,TextChanged,InsertEnter *.nim call s:hlGuard()
+autocmd! BufReadPost,BufWritePost *.nim call s:hlGuard()
