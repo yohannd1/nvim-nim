@@ -41,6 +41,15 @@ Nim support for Neovim
     - [ ] Autocompletion with ycm
     - [ ] Autocompletion with deoplete
     - [ ] REPL interaction
+- [ ] Add tests
+    - [ ] CI integration
+    - [ ] Test nimsuggest for surprises
+    - [ ] Unit tests
+
+# TASKS
+- [ ] Sync version communicating with nimsuggest
+- [ ] Test the user's versions
+- [ ] Add roadmap
 
 # BUGS
 - [ ] Not all lines are read from stdin for some reason with job-control
