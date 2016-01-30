@@ -25,6 +25,7 @@ Attempt at writing an async outline/structure listing/navigator for files/module
 
 # TODO For advanced
 - [ ] Syntax with nim compiler highlight using matchaddpos ??
+- [ ] Highlight variable names semantically
 - [ ] Outline with unite
 - [ ] Outline with proper tagbar
 - [ ] Usages with unite

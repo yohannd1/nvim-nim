@@ -1,3 +1,12 @@
+" if exists("b:loaded")
+"     finish
+" endif
+let b:loaded = 1
+
+setlocal formatoptions-=t formatoptions+=l
+setlocal comments=s1:#[,mb:#,ex:]#,:#
+setlocal commentstring=#\ %s
+setlocal expandtab
 
 command! NimDefinition          :call features#definition#run()
 command! NimInfo                :call features#info#run()
