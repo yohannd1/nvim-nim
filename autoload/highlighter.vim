@@ -15,7 +15,7 @@ function! s:NimHighlighter.on_stderr(job, chunk)
 endfunction
 
 function! s:NimHighlighter.on_exit()
-    if self.file != expand("%:p")
+    if empty(self.lines) && self.file != expand("%:p")
         return
     endif
     let highlights = {
@@ -52,7 +52,12 @@ function! s:NimHighlighter.on_exit()
         if len(line) == 0
             continue
         endif
+
         let p = split(line, "	")
+        if len(p) < 5
+            continue
+        endif
+
         let line = p[2] + 0
         let c = p[3] + 1
         let s = p[4] + 0
@@ -90,7 +95,9 @@ endfunction
 
 
 function! highlighter#guard()
-    if line("$") + 0 < 500
-        call highlighter#New()
+    if g:nvim_nim_enable_highlighter
+        if line("$") + 0 < 500
+            call highlighter#New()
+        endif
     endif
 endfunction

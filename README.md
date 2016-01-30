@@ -1,4 +1,4 @@
-# nvim-nim
+# nvim-nim [![Build Status](https://travis-ci.org/baabelfish/nvim-nim.svg?branch=master)](https://travis-ci.org/baabelfish/nvim-nim)
 Nim support for Neovim
 
 # TODO
@@ -42,7 +42,7 @@ Nim support for Neovim
     - [ ] Autocompletion with deoplete
     - [ ] REPL interaction
 - [ ] Add tests
-    - [ ] CI integration
+    - [x] CI integration
     - [ ] Test nimsuggest for surprises
     - [ ] Unit tests
 

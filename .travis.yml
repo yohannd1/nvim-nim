@@ -1,0 +1,2 @@
+language: viml
+script: ./other/travis.sh

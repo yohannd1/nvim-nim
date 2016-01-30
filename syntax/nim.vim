@@ -15,7 +15,7 @@ syntax keyword nimKeyword do expr stmt end generic mixin iterator
 syntax keyword nimKeyword typedesc openarray out ptr ref return using 
 syntax keyword nimKeyword varargs with without yield
 
-" syntax keyword nimOperator for while
+syntax keyword nimRepeat       for    while
 syntax keyword nimBoolean      true   false
 syntax keyword nimConditional  if     elif    else    case      continue break
 syntax keyword nimDefine       from   as
@@ -109,6 +109,9 @@ syntax match nimToken "(\."
 syntax match nimToken "\.)"
 
 
+" String
+syntax region nimString start=/\v"/ skip=/\v\\./ end=/\v"/
+
 " Linking
 highlight link nimBuiltinIterators Typedef
 highlight link nimBuiltinFunction  Function
@@ -135,6 +138,7 @@ highlight link nimFloat            Float
 highlight link nimString           String
 highlight link nimChar             Char
 highlight link nimNumber           Number
+highlight link nimString String
 
 highlight link nimConditional  Conditional
 highlight link nimConstant     Constant

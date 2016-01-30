@@ -19,16 +19,20 @@ function! s:NimSuggest.on_stderr()
 endfunction
 
 function! s:NimSuggest.on_exit()
-    call self.handler.run(self)
+    if len(self.lines) > 0
+        call self.handler.run(self)
+    else
+        echo ""
+    endif
 endfunction
 
-function! suggest#New(command, useV2, handler)
+function! suggest#NewKnown(command, useV2, file, line, col, handler)
     let result = copy(s:NimSuggest)
     let result.lines = []
-    let result.file = expand("%:p")
+    let result.file = a:file
     let result.tempfile = result.file . ".temp"
-    let result.line = line(".")
-    let result.col = col(".")
+    let result.line = a:line
+    let result.col = a:col
     let result.handler = a:handler
     " if a:useTempFile
     "     call writefile(getline(1, '$'), result.tempfile)
@@ -37,4 +41,9 @@ function! suggest#New(command, useV2, handler)
     let result.job = jobstart([g:nvim_nim_exec_nimsuggest, (a:useV2 ? '--v2' : ''), '--stdin', result.file], result)
     call jobsend(result.job, a:command . " " . result.file . ":" . result.line . ":" . result.col . "\nquit\n") 
     return result
+endfunction
+
+
+function! suggest#New(command, useV2, handler)
+    return suggest#NewKnown(a:command, a:useV2, expand("%:p"), line("."), col("."), a:handler)
 endfunction
