@@ -51,7 +51,6 @@ function! s:UsagesDefinitionImpl.run(data)
 endfunction
 
 function! features#usages#run(findInProject)
-    call util#StartQuery()
     cclose
     call setqflist([])
     let s:findInProject = a:findInProject

@@ -2,7 +2,7 @@
 Nim support for Neovim
 
 # TODO
-- [ ] Add global options for user
+- [x] Add global options for user
 - [ ] Doc
     - [ ] Bindings
     - [ ] Options
@@ -34,6 +34,7 @@ Nim support for Neovim
     - [x] NimRenameSymbol
     - [ ] NimRenameSymbolProject
 - [ ] IDE features
+    - [ ] Parse proc parameter types for parameter completion
     - [ ] Auto complete modules
     - [ ] Outline with unite
     - [ ] Outline with a proper tagbar
@@ -43,13 +44,26 @@ Nim support for Neovim
     - [ ] REPL interaction
 - [ ] Add tests
     - [x] CI integration
-    - [ ] Test nimsuggest for surprises
+    - [x] Test nimsuggest for surprises
     - [ ] Unit tests
+        - [ ] Suggest module
+            - [ ] Async
+            - [ ] Sync
+    - [ ] Integration tests
+        - [ ] NimDefinition
+        - [ ] NimOutline
+        - [ ] NimInfo
+        - [ ] NimUsages
+        - [ ] NimUsagesProject
+        - [ ] NimRenameSymbol
+        - [ ] NimRenameSymbolProject
+
 
 # TASKS
-- [ ] Sync version communicating with nimsuggest
+- [x] Sync version communicating with nimsuggest
 - [ ] Test the user's versions
 - [ ] Add roadmap
+
 
 # BUGS
 - [ ] Not all lines are read from stdin for some reason with job-control

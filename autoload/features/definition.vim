@@ -18,6 +18,6 @@ endfunction
 
 
 function! features#definition#run()
-    call util#StartQuery()
     call suggest#New("def", 0, s:DefinitionImpl)
 endfunction
+

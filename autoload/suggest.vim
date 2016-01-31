@@ -22,7 +22,8 @@ function! s:NimSuggest.on_exit()
     if len(self.lines) > 0
         call self.handler.run(self)
     else
-        echo ""
+        " Clear cli
+        echo "" 
     endif
 endfunction
 
@@ -38,8 +39,20 @@ function! suggest#NewKnown(command, useV2, file, line, col, handler)
     "     call writefile(getline(1, '$'), result.tempfile)
     " endif
     " let nimcom = completion . " " . file . (a:useTempFile ? (";" . result.tempfile) : "") . ":" . line . ":" . col
-    let result.job = jobstart([g:nvim_nim_exec_nimsuggest, (a:useV2 ? '--v2' : ''), '--stdin', result.file], result)
-    call jobsend(result.job, a:command . " " . result.file . ":" . result.line . ":" . result.col . "\nquit\n") 
+
+    let jobcmd = [g:nvim_nim_exec_nimsuggest, (a:useV2 ? '--v2' : ''), '--stdin', result.file]
+    let jobcmdstr = g:nvim_nim_exec_nimsuggest . " " . (a:useV2 ? '--v2' : '') . " " . '--stdin' . " " . result.file
+    let jobstdin = a:command . " " . result.file . ":" . result.line . ":" . result.col
+
+    if !g:nvim_nim_enable_async || !has("nvim")
+        let fullcmd = 'echo -e ' . shellescape(jobstdin, 1) . '|' . jobcmdstr
+        let result.lines = split(system(fullcmd), "\n")[4:-2]
+        call a:handler.run(result)
+    else
+        call util#StartQuery()
+        let result.job = jobstart([g:nvim_nim_exec_nimsuggest, (a:useV2 ? '--v2' : ''), '--stdin', result.file], result)
+        call jobsend(result.job, jobcmd)
+    endif
     return result
 endfunction
 
