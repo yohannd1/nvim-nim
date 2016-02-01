@@ -12,13 +12,13 @@ Nim support for Neovim
     - [x] Keywords
     - [x] Operator precedence different colors
     - [x] Numbers
-    - [ ] String
+    - [x] String
     - [ ] Multiline comments
     - [ ] Highlight variable names semantically
 - [ ] Indendation
 - [ ] Compiler support
+    - [x] Omnicomplete
     - [ ] Make for errors
-    - [ ] Omnicomplete
 - [x] Nimsuggest
     - [x] Usages
     - [x] Jump to definition
@@ -34,14 +34,16 @@ Nim support for Neovim
     - [x] NimRenameSymbol
     - [ ] NimRenameSymbolProject
 - [ ] IDE features
-    - [ ] Parse proc parameter types for parameter completion
-    - [ ] Auto complete modules
+    - [x] Neomake
+    - [x] Autocompletion with ycm
+    - [ ] Search and view online documentation
+    - [ ] Usages with unite
     - [ ] Outline with unite
     - [ ] Outline with a proper tagbar
-    - [ ] Usages with unite
-    - [ ] Autocompletion with ycm
-    - [ ] Autocompletion with deoplete
+    - [ ] Auto complete modules
+    - [ ] Parse proc parameter types for parameter completion
     - [ ] REPL interaction
+    - [ ] Airline integration
 - [ ] Add tests
     - [x] CI integration
     - [x] Test nimsuggest for surprises
@@ -61,9 +63,9 @@ Nim support for Neovim
 
 # TASKS
 - [x] Sync version communicating with nimsuggest
-- [ ] Test the user's versions
+- [ ] Test dependency versions
 - [ ] Add roadmap
 
 
 # BUGS
-- [ ] Not all lines are read from stdin for some reason with job-control
+- [x] Not all lines are read from stdin for some reason with job-control

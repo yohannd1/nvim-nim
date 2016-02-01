@@ -4,6 +4,37 @@ endif
 let s:loaded = 1
 
 
+let s:idtypes = {
+            \ 'skProc':         ["p", "Function"],
+            \ 'skTemplate':     ["t", "Template"],
+            \ 'skType':         ["T", "Type"],
+            \ 'skMacro':        ["M", "Macro"],
+            \ 'skMethod':       ["m", "Method"],
+            \ 'skField':        ["field", "Field"],
+            \ 'skAlias':        ["a", "Alias"],
+            \ 'skConditional':  ["c", "Conditional"],
+            \ 'skConst':        ["C", "Constant"],
+            \ 'skConverter':    ["c", "Converter"],
+            \ 'skDynLib':       ["d", "Dynamic library"],
+            \ 'skEnumField':    ["e", "Enum field"],
+            \ 'skForVar':       ["l", "Loop variable"],
+            \ 'skGenericParam': ["g", "Generic parameter"],
+            \ 'skGlobalVar':    ["g", "Global variable"],
+            \ 'skGlobalLet':    ["g", "Global constant"],
+            \ 'skIterator':     ["i", "Iterator"],
+            \ 'skLabel':        ["l", "Label"],
+            \ 'skLet':          ["r", "Runtime constant"],
+            \ 'skModule':       ["m", "Module"],
+            \ 'skPackage':      ["p", "Package"],
+            \ 'skParam':        ["p", "Parameter"],
+            \ 'skResult':       ["r", "Result"],
+            \ 'skStub':         ["s", "Stub"],
+            \ 'skTemp':         ["t", "Temporary"],
+            \ 'skUnknown':      ["u", "Unknown"],
+            \ 'skVar':          ["v", "Variable"],
+            \ }
+
+
 function! util#FirstNonEmpty(lines)
     for line in a:lines
         if len(line) > 0
@@ -48,9 +79,15 @@ function! util#StartQuery()
 endfunction
 
 
+function! s:GetModule(path)
+    return a:path[0]
+endfunction
+
+
 function! util#ParseV1(line)
     let res = split(a:line, "	")
     let path = split(res[2], "\\.")
+
     let result = {
                 \ "ctype": res[0],
                 \ "kind": res[1],
@@ -60,9 +97,11 @@ function! util#ParseV1(line)
                 \ "line": res[5],
                 \ "col": res[6],
                 \ "doc": res[7],
-                \ "module": join(path[0:-3], "."),
+                \ "module": s:GetModule(path),
                 \ "location": join(path[0:-2], "."),
                 \ "lname": path[-1],
+                \ "kindstr": s:idtypes[res[1]][1],
+                \ "kindshort": s:idtypes[res[1]][0],
                 \ }
     return result
 endfunction
@@ -80,10 +119,13 @@ function! util#ParseV2(line)
                 \ "line": res[5],
                 \ "col": res[6],
                 \ "doc": res[7],
-                \ "module": join(path[0:-3], "."),
+                \ "quality": res[8],
+                \ "module": s:GetModule(path),
                 \ "location": join(path[0:-2], "."),
                 \ "name": path[-1],
                 \ "lname": path[-1],
+                \ "kindstr": s:idtypes[res[1]][1],
+                \ "kindshort": s:idtypes[res[1]][0],
                 \ }
     return result
 endfunction

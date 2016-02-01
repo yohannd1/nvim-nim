@@ -27,5 +27,6 @@ endfunction
 function! features#outline#run()
     cclose
     call setqflist([])
-    call suggest#New("outline", 1, s:OutlineImpl)
+    call suggest#New("outline", 1, 1, s:OutlineImpl)
 endfunction
+

@@ -7,6 +7,7 @@ setlocal formatoptions-=t formatoptions+=l
 setlocal comments=s1:#[,mb:#,ex:]#,:#
 setlocal commentstring=#\ %s
 setlocal expandtab
+setlocal omnifunc=omni#nim
 
 command! NimDefinition          :call features#definition#run()
 command! NimInfo                :call features#info#run()

@@ -18,6 +18,7 @@ endfunction
 
 
 function! features#definition#run()
-    call suggest#New("def", 0, s:DefinitionImpl)
+    call suggest#New("def", 1, 0, s:DefinitionImpl)
 endfunction
+
 
