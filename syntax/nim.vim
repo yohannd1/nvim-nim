@@ -154,3 +154,26 @@ highlight link nimRepeat       Repeat
 highlight link nimStorage      Structure
 highlight link nimStorageClass StorageClass
 highlight link nimTypedef      Typedef
+
+if g:nvim_nim_highlighter_semantic
+    hi Semantic0  guifg=#904719 gui=none
+    hi Semantic1  guifg=#44f365 gui=none
+    hi Semantic2  guifg=#503f43 gui=none
+    hi Semantic3  guifg=#c18167 gui=none
+    hi Semantic4  guifg=#688704 gui=none
+    hi Semantic5  guifg=#6b4b77 gui=none
+    hi Semantic6  guifg=#718c07 gui=none
+    hi Semantic7  guifg=#7211cb gui=none
+    hi Semantic8  guifg=#84ec66 gui=none
+    hi Semantic9  guifg=#8f7fc3 gui=none
+    hi Semantic10 guifg=#9dd1db gui=none
+    hi Semantic11 guifg=#b80145 gui=none
+    hi Semantic12 guifg=#c19345 gui=none
+    hi Semantic13 guifg=#ce6723 gui=none
+    hi Semantic14 guifg=#d787c4 gui=none
+    hi Semantic15 guifg=#e20caf gui=none
+    hi Semantic16 guifg=#e59eee gui=none
+    hi Semantic17 guifg=#efd63f gui=none
+    hi Semantic18 guifg=#fcbc89 gui=none
+    hi Semantic19 guifg=#7c78c9 gui=none
+endif

@@ -129,3 +129,62 @@ function! util#ParseV2(line)
                 \ }
     return result
 endfunction
+
+
+let s:nesting_chars = ['(', '[', '{']
+let s:unnesting_chars = [')', ']', '}']
+let s:strip_regex = '\v^\s*(.{-})\s*$'
+
+function! util#ParseSignature(input)
+    let pstart = stridx(a:input, "(") + 1
+    let pend = strridx(a:input, ")")
+    let parameters = strpart(a:input, pstart, pend - pstart)
+    let parameters_end = len(parameters) - 1
+
+    let depth = 0
+    let tsep = -1
+    let result = {'params': [], 'reval': '' }
+
+    " Parameters
+    let idx = 0
+    for s:char in split(parameters, '\zs')
+        if index(s:nesting_chars, s:char) >= 0
+            let depth += 1
+        elseif index(s:unnesting_chars, s:char) >= 0
+            let depth -= 1
+        endif
+
+        if depth == 0
+            if s:char == ':'
+                let tsep = idx
+            elseif  s:char == ',' || s:char == ';'
+                call add(result.params, substitute(strpart(parameters, tsep + 1, idx - tsep - 1), s:strip_regex, '\1', ''))
+                let tsep = -1
+            endif
+        endif
+
+        let idx += 1
+    endfor
+
+    if tsep != -1
+        call add(result.params, substitute(strpart(parameters, tsep + 1, parameters_end + 1), s:strip_regex, '\1', ''))
+    endif
+
+    " Return value
+    let rstart = stridx(a:input, ":", pend + 1)
+    let rend = stridx(a:input, "{\.", pend + 1)
+    if rstart != -1 && rstart < rend
+        let reval = strpart(a:input, rstart + 1)
+        if rend != -1
+            let reval = strpart(reval, 0, rend - rstart - 1)
+        endif
+        let result.reval = substitute(reval, s:strip_regex, '\1', '')
+    endif
+
+    return result
+endfunction
+
+function! util#SignatureStr(input)
+    let tinfo = util#ParseSignature(a:input)
+    return join(tinfo.params, " -> ") . (tinfo.reval != "" ? (" => " . tinfo.reval) : "")
+endfunction

@@ -18,34 +18,35 @@ function! s:NimHighlighter.on_exit()
     if empty(self.lines) && self.file != expand("%:p")
         return
     endif
+
     let highlights = {
-                \ 'skProc':         ["Function", []],
-                \ 'skTemplate':     ["PreProc", []],
-                \ 'skType':         ["Type", []],
-                \ 'skMacro':        ["Macro", []],
-                \ 'skMethod':       ["Function", []],
-                \ 'skField':        ["Identifier", []],
-                \ 'skAlias':        ["Type", []],
-                \ 'skConditional':  ["Conditional", []],
-                \ 'skConst':        ["Constant", []],
-                \ 'skConverter':    ["Function", []],
-                \ 'skDynLib':       ["Include", []],
-                \ 'skEnumField':    ["Identifier", []],
-                \ 'skForVar':       ["Special", []],
-                \ 'skGenericParam': ["Typedef", []],
-                \ 'skGlobalVar':    ["Constant", []],
-                \ 'skGlobalLet':    ["Constant", []],
-                \ 'skIterator':     ["Keyword", []],
-                \ 'skLabel':        ["Identifier", []],
-                \ 'skLet':          ["Constant", []],
-                \ 'skModule':       ["Include", []],
-                \ 'skPackage':      ["Define", []],
-                \ 'skParam':        ["Identifier", []],
-                \ 'skResult':       ["Keyword", []],
-                \ 'skStub':         ["PreCondit", []],
-                \ 'skTemp':         ["Identifier", []],
-                \ 'skUnknown':      ["Error", []],
-                \ 'skVar':          ["Constant", []]
+                \ 'skProc':         ["Function",    [], 0],
+                \ 'skTemplate':     ["PreProc",     [], 0],
+                \ 'skType':         ["Type",        [], 0],
+                \ 'skMacro':        ["Macro",       [], 0],
+                \ 'skMethod':       ["Function",    [], 0],
+                \ 'skField':        ["Identifier",  [], 0],
+                \ 'skAlias':        ["Type",        [], 0],
+                \ 'skConditional':  ["Conditional", [], 0],
+                \ 'skConst':        ["Constant",    [], 1],
+                \ 'skConverter':    ["Function",    [], 0],
+                \ 'skDynLib':       ["Include",     [], 0],
+                \ 'skEnumField':    ["Identifier",  [], 0],
+                \ 'skForVar':       ["Special",     [], 1],
+                \ 'skGenericParam': ["Typedef",     [], 0],
+                \ 'skGlobalVar':    ["Constant",    [], 1],
+                \ 'skGlobalLet':    ["Constant",    [], 1],
+                \ 'skIterator':     ["Keyword",     [], 0],
+                \ 'skLabel':        ["Identifier",  [], 0],
+                \ 'skLet':          ["Constant",    [], 1],
+                \ 'skModule':       ["Include",     [], 1],
+                \ 'skPackage':      ["Define",      [], 0],
+                \ 'skParam':        ["Identifier",  [], 1],
+                \ 'skResult':       ["Keyword",     [], 0],
+                \ 'skStub':         ["PreCondit",   [], 0],
+                \ 'skTemp':         ["Identifier",  [], 1],
+                \ 'skUnknown':      ["Error",       [], 0],
+                \ 'skVar':          ["Constant",    [], 1]
                 \ }
 
     for line in self.lines
@@ -69,7 +70,16 @@ function! s:NimHighlighter.on_exit()
 
     let new_highlights = []
     for [k, v] in items(highlights)
-        call add(new_highlights, matchaddpos(v[0], v[1]))
+        if g:nvim_nim_highlighter_semantic && v[2]
+            for pos in v[1]
+                let l = getline(pos[0])
+                let c = pos[1]
+                let class = (char2nr(l[c]) * char2nr(l[c + 1])) % 20
+                call add(new_highlights, matchaddpos("Semantic" . class, [pos]))
+            endfor
+        else
+            call add(new_highlights, matchaddpos(v[0], v[1]))
+        endif
     endfor
 
     for m in b:old_highlights
@@ -95,7 +105,7 @@ endfunction
 
 
 function! highlighter#guard()
-    if g:nvim_nim_enable_highlighter
+    if g:nvim_nim_highlighter_enable
         if line("$") + 0 < 500
             call highlighter#New()
         endif

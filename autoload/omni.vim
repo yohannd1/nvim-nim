@@ -1,16 +1,16 @@
-" if exists("s:loaded")
-"     finish
-" endif
-" let s:loaded = 1
-
+if exists("s:loaded")
+    finish
+endif
+let s:loaded = 1
 
 function! omni#item(parsed)
     return {
                 \ 'word': a:parsed.lname,
-                \ 'menu': a:parsed.module,
-                \ 'kind': a:parsed.kindshort . " » " . a:parsed.type,
+                \ 'kind': a:parsed.kindshort . " » " . util#SignatureStr(a:parsed.type),
                 \ 'info': a:parsed.doc,
+                \ 'menu': a:parsed.module,
                 \ }
+                " \ 'kind': a:parsed.kindshort . " » " . a:parsed.type,
 endfunction
 
 function! omni#nim(findstart, base)

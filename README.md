@@ -13,12 +13,11 @@ Nim support for Neovim
     - [x] Operator precedence different colors
     - [x] Numbers
     - [x] String
+    - [x] Highlight variable names semantically
     - [ ] Multiline comments
-    - [ ] Highlight variable names semantically
 - [ ] Indendation
 - [ ] Compiler support
-    - [x] Omnicomplete
-    - [ ] Make for errors
+    - [ ] Make with nim check
 - [x] Nimsuggest
     - [x] Usages
     - [x] Jump to definition
@@ -44,6 +43,11 @@ Nim support for Neovim
     - [ ] Parse proc parameter types for parameter completion
     - [ ] REPL interaction
     - [ ] Airline integration
+    - [ ] When lines are added or removed use cached highlighter results
+    - [ ] When editing line, remove highlighter results from that line
+- [ ] Utils
+    - [x] Parse proc/template/method type information
+    - [x] "Haskellify" typesignatures
 - [ ] Add tests
     - [x] CI integration
     - [x] Test nimsuggest for surprises
