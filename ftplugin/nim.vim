@@ -18,6 +18,16 @@ command! NimRenameSymbolProject :call features#rename#run(1)
 command! NimDebug               :call features#debug#run()
 command! NimOutline             :call features#outline#run()
 
+command! NimEdb             :call features#debugger#run()
+command! NimEdbStop         :call features#debugger#stop()
+command! NimEdbContinue     :call features#debugger#continue()
+command! NimEdbStepInto     :call features#debugger#stepinto()
+command! NimEdbStepOver     :call features#debugger#stepover()
+command! NimEdbSkipCurrent  :call features#debugger#skipcurrent()
+command! NimEdbIgonore      :call features#debugger#ignore()
+command! NimEdbContinue     :call features#debugger#continue()
+command! NimEdbToggleBP     :call features#debugger#togglebp()
+
 nnoremap <buffer> <c-]> :NimDefinition<cr>
 nnoremap <buffer> gd :NimDefinition<cr>
 nnoremap <buffer> gt :NimInfo<cr>

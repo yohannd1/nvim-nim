@@ -55,6 +55,6 @@ function! features#usages#run(findInProject)
     cclose
     call setqflist([])
     let s:findInProject = a:findInProject
-    call suggest#New("def", 1, 0, s:UsagesDefinitionImpl)
+    call suggest#New("def", 1, 1, s:UsagesDefinitionImpl)
 endfunction
 

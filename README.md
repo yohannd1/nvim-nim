@@ -44,16 +44,19 @@ Nim support for Neovim
 
 - [ ] IDE features
     - [x] Neomake
-    - [x] Autocompletion with ycm
     - [ ] Search and view online documentation
     - [ ] Usages with unite
     - [ ] Outline with unite
     - [ ] Outline with a proper tagbar
-    - [ ] Auto complete modules
     - [ ] Parse proc parameter types for parameter completion
     - [ ] Airline integration
     - [ ] When lines are added or removed use cached highlighter results
     - [ ] When editing line, remove highlighter results from that line
+
+    - [ ] Autocompletion
+        - [x] Autocompletion with ycm
+        - [ ] Auto complete modules
+        - [ ] Snippet/documentation support after complete
 
     - [ ] Debugging
         - [ ] Commands

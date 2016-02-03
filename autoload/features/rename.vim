@@ -19,18 +19,19 @@ function! s:RenameImpl.run(data)
             continue
         endif
 
-        let [_, _, _, _, filename, line, column, _, _] = split(line, "	")
-        if !s:findInProject && filename != expand("%:p")
+
+        let res = util#ParseV2(line)
+        if !s:findInProject && res.file != expand("%:p")
             continue
         endif
 
-        if filename != expand("%:p")
+        if res.file != expand("%:p")
             execute ":e " . expand("%:p")
         endif
 
-        let left = getline(line)[0:column - 1]
-        let right = getline(line)[column + len(oldName):-1]
-        call setline(line, left . newName . right)
+        let left = getline(res.line)[0:res.col - 1]
+        let right = getline(res.line)[res.col + len(oldName):-1]
+        call setline(res.line, left . newName . right)
     endfor
 endfunction
 

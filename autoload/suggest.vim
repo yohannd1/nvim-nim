@@ -5,7 +5,10 @@ let s:loaded = 1
 
 
 let s:findInProject = 1
-let s:NimSuggestServer = {}
+let s:NimSuggestServer = {
+            \ 'pty': 1,
+            \ }
+
 function! s:NimSuggestServer.on_stdout(job, chunk)
     " echoerr join(a:chunk, "\n")
 endfunction
@@ -19,7 +22,9 @@ endfunction
 
 
 " NimSuggest
-let s:NimSuggest = {}
+let s:NimSuggest = {
+            \ 'pty': 1,
+            \ }
 
 function! s:NimSuggest.on_stdout(job, chunk)
     call extend(self.lines, a:chunk)
@@ -29,11 +34,13 @@ function! s:NimSuggest.on_stderr(job, chunk)
 endfunction
 
 function! s:NimSuggest.on_exit()
-    if self.isAsync
-        let self.lines = self.lines[5:-1]
-    else
-        let self.lines = self.lines[4:-1]
-    endif
+    let temparr = []
+    for line in self.lines
+        if len(split(line, "	")) > 6
+            call add(temparr, line)
+        endif
+    endfor
+    let self.lines = temparr
 
     if len(self.lines) > 0
         call self.handler.run(self)

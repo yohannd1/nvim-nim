@@ -87,7 +87,6 @@ endfunction
 function! util#ParseV1(line)
     let res = split(a:line, "	")
     let path = split(res[2], "\\.")
-
     let result = {
                 \ "ctype": res[0],
                 \ "kind": res[1],
@@ -119,7 +118,6 @@ function! util#ParseV2(line)
                 \ "line": res[5],
                 \ "col": res[6],
                 \ "doc": res[7],
-                \ "quality": res[8],
                 \ "module": s:GetModule(path),
                 \ "location": join(path[0:-2], "."),
                 \ "name": path[-1],
@@ -127,6 +125,7 @@ function! util#ParseV2(line)
                 \ "kindstr": s:idtypes[res[1]][1],
                 \ "kindshort": s:idtypes[res[1]][0],
                 \ }
+    " \ "quality": res[8],
     return result
 endfunction
 

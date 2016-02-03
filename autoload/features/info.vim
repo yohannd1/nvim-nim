@@ -38,6 +38,5 @@ endfunction
 
 
 function! features#info#run()
-    call suggest#New("def", 1, 0, s:InfoImpl)
+    call suggest#New("def", 0, 0, s:InfoImpl)
 endfunction
-

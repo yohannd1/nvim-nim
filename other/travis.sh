@@ -58,4 +58,5 @@ echo "==========================================================================
 
 echo "Run tests in $PWD"
 cd $current/other
-nim c tests/suggestions.nim
+nim c tests/nimsuggest/suggestions.nim
+nim c tests/edb/edb.nim

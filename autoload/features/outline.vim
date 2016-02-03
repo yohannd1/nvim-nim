@@ -4,7 +4,10 @@ endif
 let s:loaded = 1
 
 
-let s:OutlineImpl = {}
+let s:OutlineImpl = {
+            \ 'pty': 1,
+            \ }
+
 function! s:OutlineImpl.run(data)
     for line in a:data.lines
         if len(line) == 0
@@ -27,6 +30,6 @@ endfunction
 function! features#outline#run()
     cclose
     call setqflist([])
-    call suggest#New("outline", 1, 1, s:OutlineImpl)
+    call suggest#New("outline", 0, 1, s:OutlineImpl)
 endfunction
 
