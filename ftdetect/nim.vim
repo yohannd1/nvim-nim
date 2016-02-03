@@ -13,3 +13,5 @@ let g:nvim_nim_highlight_builtin      = 1
 let g:nvim_nim_highlight_use_unite    = 0
 let g:nvim_nim_autocomplete           = "omni" " omni, deoplete, ycm
 let g:nvim_nim_outline                = "quickfix" " quickfix, outline
+
+let g:nvim_nim_highlighter_semantics  = ["skConst", "skForVar", "skGlobalVar", "skGlobalLet", "skLet", "skModule", "skParam", "skTemp", "skVar"]

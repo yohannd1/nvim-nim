@@ -187,3 +187,11 @@ function! util#SignatureStr(input)
     let tinfo = util#ParseSignature(a:input)
     return join(tinfo.params, " -> ") . (tinfo.reval != "" ? (" => " . tinfo.reval) : "")
 endfunction
+
+function! util#djb(str)
+    let hash = 0
+    for s:char in split(a:str, '\zs')
+        let hash = (hash * 11) + char2nr(s:char)
+    endfor
+    return float2nr(hash)
+endfunction
