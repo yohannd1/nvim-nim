@@ -1,6 +1,8 @@
 # nvim-nim [![Build Status](https://travis-ci.org/baabelfish/nvim-nim.svg?branch=master)](https://travis-ci.org/baabelfish/nvim-nim)
 Nim support for Neovim
 
+![something](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/pic1.png)
+
 # TODO
 - [x] Add global options for user
 - [ ] Indendation
