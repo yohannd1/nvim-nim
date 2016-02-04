@@ -53,6 +53,13 @@ function! util#CheckDependency(command)
 endfunction
 
 
+function! util#JumpToWindow(window, line, col)
+    execute ":" . a:window . "wincmd w"
+    execute ":" . a:line
+    execute ":norm " . (a:col) . "|"
+endfunction
+
+
 function! util#JumpToLocation(file, line, col)
     if expand("%:p") != a:file
         execute ":e " . a:file
@@ -194,4 +201,8 @@ function! util#djb(str)
         let hash = (hash * 11) + char2nr(s:char)
     endfor
     return float2nr(hash)
+endfunction
+
+function! util#open_module_doc(module, symbol)
+    call system("$BROWSER " . "http://nim-lang.org/docs/" . a:module . ".html#" . a:symbol)
 endfunction

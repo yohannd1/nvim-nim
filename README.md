@@ -42,14 +42,17 @@ Nim support for Neovim
     - [x] NimRenameSymbol
     - [ ] NimRenameSymbolProject
 
+- [ ] Misc
+    - [ ] Airline integration
+
 - [ ] IDE features
     - [x] Neomake
+    - [x] View online documentation
+    - [x] Outline with a proper tagbar
     - [ ] Search and view online documentation
     - [ ] Usages with unite
     - [ ] Outline with unite
-    - [ ] Outline with a proper tagbar
     - [ ] Parse proc parameter types for parameter completion
-    - [ ] Airline integration
     - [ ] When lines are added or removed use cached highlighter results
     - [ ] When editing line, remove highlighter results from that line
 
@@ -122,8 +125,6 @@ Nim support for Neovim
 
 ## v0.2
 ## v0.3
-## v0.1
-## v0.1
 
 
 # TASKS
