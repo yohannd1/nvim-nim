@@ -51,7 +51,6 @@ Nim support for Neovim
     - [x] Neomake
     - [x] View online documentation
     - [x] Outline with a proper tagbar
-    - [ ] Search and view online documentation
     - [ ] Usages with unite
     - [ ] Outline with unite
     - [ ] Parse proc parameter types for parameter completion
@@ -65,12 +64,12 @@ Nim support for Neovim
 
     - [ ] Debugging
         - [ ] Commands
-            - [ ] Run file in debug mode
-            - [ ] Step into
-            - [ ] Step over
-            - [ ] Skip current
-            - [ ] Continue
-            - [ ] Ignore
+            - [x] Run file in debug mode
+            - [x] Step into
+            - [x] Step over
+            - [x] Skip current
+            - [x] Continue
+            - [x] Ignore
             - [ ] Toggle breakpoint (insert breakpoint pragma and conceal it)
 
         - [ ] While on breakpoint
