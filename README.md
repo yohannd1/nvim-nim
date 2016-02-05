@@ -48,7 +48,6 @@ Nim support for Neovim
     - [ ] Autocompletion
         - [x] Autocompletion with ycm
         - [ ] Auto complete modules
-        - [ ] Snippet/documentation support after complete
 
     - [ ] Debugging
         - [ ] Commands

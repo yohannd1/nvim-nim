@@ -9,7 +9,7 @@ setlocal comments=s1:#[,mb:#,ex:]#,:#,:##
 setlocal commentstring=#\ %s
 setlocal expandtab
 setlocal omnifunc=omni#nim
-setlocal makeprg=nim\ c\ --verbosity:0\ --colors:off\ %
+setlocal makeprg=nim\ c\ --compileOnly\ --verbosity:0\ --colors:off\ %
 setlocal errorformat=
             \%-GHint:\ %m,
             \%A%f(%l\\,\ %c)\ Hint:\ %m,

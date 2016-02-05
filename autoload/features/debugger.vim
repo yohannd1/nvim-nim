@@ -6,6 +6,7 @@ let s:NimDebugger = {
 
 function! s:NimDebugger.on_stdout(job, chunk)
     for line in a:chunk
+        echom line
         " *** endb| reached edb.nim(4) wat ***
         " let matched = matchlist(line, "\\*\\*\\* endb\|\(.*\)$")
         let matched = matchlist(line, "")
@@ -26,7 +27,14 @@ function! features#debugger#run()
         echo "Debugger already running"
     else
         " vnew
-        let s:edb_terminal_job = jobstart(["nim", "c", "--colors:off", "--debugger:on", "-r", "edb.nim"], s:NimDebugger)
+        let s:edb_terminal_job = jobstart([
+                    \ "nim", 
+                    \ "c", 
+                    \ "--colors:off", 
+                    \ "--debugger:native", 
+                    \ "--lineDir:on", 
+                    \ "--lineTrace:on", 
+                    \ "edb.nim"], s:NimDebugger)
         " let s:edb_terminal_job = termopen("nim c --debugger:on -r edb.nim")
         " wincmd p
     endif
@@ -43,7 +51,9 @@ endfunction
 function! s:SendCommand(cmd)
     if s:edb_terminal_job > 0
         call jobsend(s:edb_terminal_job, a:cmd . "\n")
-        " call jobsend(s:edb_terminal_job, "w\n")
+        call jobsend(s:edb_terminal_job, "w\n")
+        call jobsend(s:edb_terminal_job, "g\n")
+        call jobsend(s:edb_terminal_job, "l\n")
     else
         echom "Debugger not running"
     endif
