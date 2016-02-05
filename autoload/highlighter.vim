@@ -86,7 +86,7 @@ function! s:NimHighlighter.on_exit()
 
         if has_key(s:highlights, ctype)
             if has_key(semantics_set, ctype)
-                call add(b:highlights, matchaddpos("Semantic" . util#djb(strpart(str, c - 1, s)) % 20, [[line, c, s]]))
+                call add(b:highlights, matchaddpos("Semantic" . abs(util#djb(strpart(str, c - 1, s))) % 20, [[line, c, s]]))
             else
                 call add(b:highlights, matchaddpos(s:highlights[ctype], [[line, c, s]]))
             endif

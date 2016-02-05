@@ -5,13 +5,8 @@ Nim support for Neovim
 
 # TODO
 - [x] Add global options for user
-- [ ] Indendation
 
-- [ ] Doc
-    - [ ] Bindings
-    - [ ] Options
-    - [ ] Commands
-    - [ ] Using with other plugins
+- [x] Indendation
 
 - [ ] Syntax
     - [x] Keywords
@@ -21,12 +16,8 @@ Nim support for Neovim
     - [x] Highlight variable names semantically
     - [ ] Multiline comments
 
-- [ ] File based configuration
-    - [ ] Read project file
-    - [ ] Create project file
-
-- [ ] Compiler support
-    - [ ] Make with nim check
+- [x] Compiler support
+    - [x] Make with nim check
 
 - [x] Nimsuggest
     - [x] Usages
@@ -43,9 +34,6 @@ Nim support for Neovim
     - [x] NimUsagesProject
     - [x] NimRenameSymbol
     - [ ] NimRenameSymbolProject
-
-- [ ] Misc
-    - [ ] Airline integration
 
 - [ ] IDE features
     - [x] Neomake
@@ -118,6 +106,19 @@ Nim support for Neovim
         - [ ] NimUsagesProject
         - [ ] NimRenameSymbol
         - [ ] NimRenameSymbolProject
+
+- [ ] Doc
+    - [ ] Bindings
+    - [ ] Options
+    - [ ] Commands
+    - [ ] Using with other plugins
+
+- [ ] File based configuration
+    - [ ] Read project file
+    - [ ] Create project file
+
+- [ ] Misc
+    - [ ] Airline integration
 
 
 # Roadmap

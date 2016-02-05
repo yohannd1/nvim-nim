@@ -3,11 +3,18 @@ if exists("b:loaded")
 endif
 let b:loaded = 1
 
+setlocal iskeyword=a-z,A-Z,48-57,128-255,_
 setlocal formatoptions-=t formatoptions+=l
-setlocal comments=s1:#[,mb:#,ex:]#,:#
+setlocal comments=s1:#[,mb:#,ex:]#,:#,:##
 setlocal commentstring=#\ %s
 setlocal expandtab
 setlocal omnifunc=omni#nim
+setlocal makeprg=nim\ c\ --verbosity:0\ --colors:off\ %
+setlocal errorformat=
+            \%-GHint:\ %m,
+            \%A%f(%l\\,\ %c)\ Hint:\ %m,
+            \%E%f(%l\\,\ %c)\ Error:\ %m,
+            \%W%f(%l\\,\ %c)\ Warning:\ %m
 
 command! NimDefinition          :call features#definition#run()
 command! NimInfo                :call features#info#run()
