@@ -19,10 +19,9 @@ function! omni#nim(findstart, base)
     else
 
     let file = expand("%:p")
-    let tempfile = file . ".temp"
+    let tempfile = util#WriteMemfile()
     let l = line(".")
     let c = col(".")
-    call writefile(getline(1, '$'), tempfile)
 
     let query = "sug " . file . ";" . tempfile . ":" . l . ":" . c
     let jobcmdstr = g:nvim_nim_exec_nimsuggest . " --v2 --stdin " . file

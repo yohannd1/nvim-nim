@@ -53,6 +53,19 @@ function! util#CheckDependency(command)
 endfunction
 
 
+function! util#MemFilePath(file)
+    return "/tmp/nvimnvimtemp" . substitute(a:file, "\/", "_-_", "g")
+endfunction
+
+
+"" Writes current buffer into a memfile
+function! util#WriteMemfile()
+    let memfile = util#MemFilePath(expand("%:p"))
+    call writefile(getline(1, '$'), memfile)
+    return memfile
+endfunction
+
+
 function! util#JumpToWindow(window, line, col)
     execute ":" . a:window . "wincmd w"
     execute ":" . a:line
