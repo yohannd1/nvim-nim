@@ -1,138 +1,34 @@
 # nvim-nim [![Build Status](https://travis-ci.org/baabelfish/nvim-nim.svg?branch=master)](https://travis-ci.org/baabelfish/nvim-nim)
-Nim support for Neovim
+Nim support for vim and advanced support for neovim.
+
+DON'T INSTALL YET, STILL UNDER VERY HEAVY DEVELOPMENT.
+
+## Features
+- Syntax highlighting
+    - Normal vim highlight
+    - More intelligent highlight with nimsuggest
+    - Semantic highlighting for specified nim symbol kinds
+- Indentation
+- Error checking
+    - Using ``:make``
+    - Neomake
+- Project navigation with nimsuggest
+    - Jump to definition
+    - Get symbol information (type, module, file, signature, etc...)
+    - Find usages (file and/or project)
+- Autocompletion
+    - Nimsuggest autocompletion
+- IDE like stuff
+    - Outline listing all symbols in the module (like tagbar)
+    - Jump to documentation in web
+    - Refactoring
+        - Rename symbol in file or project
 
 ![something](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/pic1.png)
 
-# TODO
-- [x] Add global options for user
 
-- [x] Indendation
-
-- [ ] Syntax
-    - [x] Keywords
-    - [x] Operator precedence different colors
-    - [x] Numbers
-    - [x] String
-    - [x] Highlight variable names semantically
-    - [ ] Multiline comments
-
-- [x] Compiler support
-    - [x] Make with nim check
-
-- [x] Nimsuggest
-    - [x] Usages
-    - [x] Jump to definition
-    - [x] Show typeinfo
-    - [x] Outline
-    - [x] Highlight
-
-- [x] Commands
-    - [x] NimDefinition
-    - [x] NimOutline
-    - [x] NimInfo
-    - [x] NimUsages
-    - [x] NimUsagesProject
-    - [x] NimRenameSymbol
-    - [ ] NimRenameSymbolProject
-
-- [ ] IDE features
-    - [x] Neomake
-    - [x] View online documentation
-    - [x] Outline with a proper tagbar
-    - [ ] Usages with unite
-    - [ ] Outline with unite
-    - [ ] Parse proc parameter types for parameter completion
-    - [ ] When lines are added or removed use cached highlighter results
-    - [ ] When editing line, remove highlighter results from that line
-
-    - [ ] Autocompletion
-        - [x] Autocompletion with ycm
-        - [ ] Auto complete modules
-
-    - [ ] Debugging
-        - [ ] Commands
-            - [x] Run file in debug mode
-            - [x] Step into
-            - [x] Step over
-            - [x] Skip current
-            - [x] Continue
-            - [x] Ignore
-            - [ ] Toggle breakpoint (insert breakpoint pragma and conceal it)
-
-        - [ ] While on breakpoint
-            - [ ] NimDebuggerEval
-            - [ ] NimDebuggerEvalOutput [file]
-            - [ ] NimDebuggerSetMaxdisplay
-            - [ ] NimDebuggerWhere
-            - [ ] NimDebuggerUp
-            - [ ] NimDebuggerDown
-            - [ ] NimDebuggerStackframe [file]
-            - [ ] NimDebuggerCallstack
-            - [ ] NimDebuggerListLocals (could be automated into a buffer)
-            - [ ] NimDebuggerListGlobals (could be automated into a buffer)
-
-        - [ ] Buffer for listing breakpoints
-            - [ ] Enable and disable breakpoints
-
-        - [ ] Watches
-            - [ ] Toggle watchpoint (insert watchpoint and conceal it)
-            - [ ] Watchpoint buffer with all watches and values
-
-    - [ ] REPL
-        - [ ] NimREPL
-        - [ ] NimREPLEvalFile
-        - [ ] NimREPLSend
-        - [ ] NimREPLEvalExpression
-
-- [ ] Utils
-    - [x] Parse proc/template/method type information
-    - [x] "Haskellify" typesignatures
-
-- [ ] Add tests
-    - [x] CI integration
-    - [x] Test nimsuggest for surprises
-
-    - [ ] Unit tests
-        - [ ] Suggest module
-            - [ ] Async
-            - [ ] Sync
-
-    - [ ] Integration tests
-        - [ ] NimDefinition
-        - [ ] NimOutline
-        - [ ] NimInfo
-        - [ ] NimUsages
-        - [ ] NimUsagesProject
-        - [ ] NimRenameSymbol
-        - [ ] NimRenameSymbolProject
-
-- [ ] Doc
-    - [ ] Bindings
-    - [ ] Options
-    - [ ] Commands
-    - [ ] Using with other plugins
-
-- [ ] File based configuration
-    - [ ] Read project file
-    - [ ] Create project file
-
-- [ ] Misc
-    - [ ] Airline integration
-
-
-# Roadmap
-## v0.1
-- Everything works for single file without project dependency
-
-## v0.2
-## v0.3
-
-
-# TASKS
-- [x] Sync version communicating with nimsuggest
-- [ ] Test dependency versions
-- [ ] Add roadmap
-
-
-# BUGS
-- [x] Not all lines are read from stdin for some reason with job-control
+## Planned features
+- REPL support
+- Debugger support
+- Autocomplete modules
+- All features will work asynchronously
