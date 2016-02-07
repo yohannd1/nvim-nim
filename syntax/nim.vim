@@ -84,11 +84,14 @@ syntax keyword nimGlobals on off appType NoFakeVars isMainModule CompileDate Com
 
 
 " Numbers
-syntax match nimNumber "\v[0-9_]+((i|I|u|U)(8|16|32|64))?>"
-syntax match nimFloat "\v[0-9_]+(f|d|F|D)>"
-syntax match nimFloat "\v[0-9_]+\.[0-9]+(f|d|F|D)>"
-syntax match nimFloat "\v[0-9_]+((f|F)(32|64|128))>"
-syntax match nimFloat "\v[0-9_]+\.[0-9]+((f|F)(32|64|128))?>"
+syntax match nimNumber "\v<[0-9_]+((i|I|u|U)(8|16|32|64))?>"
+syntax match nimNumber "\v<0x[0-9,a-f,A-F]+>"
+syntax match nimNumber "\v<0[bB][01]+>"
+syntax match nimNumber "\v<0[ocC][0-7]+>"
+syntax match nimFloat "\v<[0-9_]+(f|d|F|D)>"
+syntax match nimFloat "\v<[0-9_]+\.[0-9]+(f|d|F|D)>"
+syntax match nimFloat "\v<[0-9_]+((f|F)(32|64|128))>"
+syntax match nimFloat "\v<[0-9_]+\.[0-9]+((f|F)(32|64|128))?>"
 
 
 " Tokens

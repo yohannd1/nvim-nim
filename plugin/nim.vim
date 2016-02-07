@@ -35,7 +35,7 @@ let g:nvim_nim_exec_bash       = CheckDependency("bash")
 let g:nvim_nim_deps_nim        = FindNimModulesPath()
 let g:nvim_nim_deps_nimble     = FindNimbleModulesPath()
 
-let g:nvim_nim_highlighter_enable     = 1
+let g:nvim_nim_highlighter_enable     = 0
 let g:nvim_nim_enable_async           = 1
 let g:nvim_nim_highlight_builtin      = 1
 let g:nvim_nim_highlight_use_unite    = 0
