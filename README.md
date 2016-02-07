@@ -23,12 +23,15 @@ DON'T INSTALL YET, STILL UNDER VERY HEAVY DEVELOPMENT.
     - Jump to documentation in web
     - Refactoring
         - Rename symbol in file or project
+- REPL
+    - Open repl
+    - Send current buffer
+    - Send selection
 
 ![something](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/pic1.png)
 
 
 ## Planned features
-- REPL support
 - Debugger support
 - Autocomplete modules
 - All features will work asynchronously

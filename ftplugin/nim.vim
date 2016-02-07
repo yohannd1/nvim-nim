@@ -36,6 +36,10 @@ command! NimEdbIgonore          :call features#debugger#ignore()
 command! NimEdbContinue         :call features#debugger#continue()
 command! NimEdbToggleBP         :call features#debugger#togglebp()
 
+command! NimREPL                :call features#repl#start()
+command! NimREPLEvalFile        :call features#repl#send(getline(0, line("$")))
+command! -range NimREPLEval     :call features#repl#send(getline(getpos("'<")[1], getpos("'>")[1]))
+
 nnoremap <buffer> <c-]> :NimDefinition<cr>
 nnoremap <buffer> gd    :NimDefinition<cr>
 nnoremap <buffer> gt    :NimInfo<cr>

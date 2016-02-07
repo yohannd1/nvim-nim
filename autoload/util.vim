@@ -262,3 +262,15 @@ function! util#SelectNimProc(inner)
         normal! h
     endif
 endfunction
+
+
+call operator#user#define('nimrepl_send', 'NimReplSend')
+function! NimReplSend(motion_wiseness)
+    let start = getpos("'[")
+    let stop = getpos("']")
+    let start_line = start[1]
+    let stop_line = stop[1]
+    let str = join(getline(start_line, stop_line), "\n")
+    echom str
+    call features#repl#send(str)
+endfunction
