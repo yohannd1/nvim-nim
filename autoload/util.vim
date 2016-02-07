@@ -44,12 +44,12 @@ function! util#FirstNonEmpty(lines)
 endfunction
 
 
-function! util#CheckDependency(command)
-    if !executable(a:command)
-        echoerr "Not found: " . a:command
-        finish
-    endif
-    return exepath(a:command)
+function! util#FirstNonEmpty(lines)
+    for line in a:lines
+        if len(line) > 0
+            return line
+        endif
+    endfor
 endfunction
 
 
