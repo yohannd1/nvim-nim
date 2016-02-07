@@ -47,3 +47,6 @@ let g:nvim_nim_repl_height            = 14
 let g:nvim_nim_repl_vsplit            = 0
 
 let g:nvim_nim_highlighter_semantics  = ["skConst", "skForVar", "skGlobalVar", "skGlobalLet", "skLet", "skModule", "skParam", "skTemp", "skVar"]
+
+au BufNewFile,BufRead *.nim setlocal filetype=nim
+au BufNewFile,BufRead *.nims setlocal filetype=nims

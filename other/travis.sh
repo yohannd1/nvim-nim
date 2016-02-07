@@ -2,6 +2,7 @@
 
 current=$PWD
 
+
 install_nim() {
     wget "http://nim-lang.org/download/nim-0.13.0.tar.xz" -O nim.tar.xz
     mkdir nim
@@ -29,21 +30,31 @@ install_nimsuggest() {
     cd ..
 }
 
-mkdir tmp
-cd tmp
 
-echo "Installing nim"
-install_nim
+if [[ ! -d "tmp" ]]; then
+    mkdir tmp
+    cd tmp
 
-echo "Installing nimble"
-install_nimble
+    echo "Installing nim"
+    install_nim
 
-echo "Installing nimsuggest"
-install_nimsuggest
+    echo "Installing nimble"
+    install_nimble
 
-cd ..
+    echo "Installing nimsuggest"
+    install_nimsuggest
+
+    cd ..
+fi
+
+export PATH=$PATH:$current/tmp/nim/bin
+export PATH=$PATH:$current/nimble/src
+export PATH=$PATH:$current/nimble/nimsuggest
 
 echo "================================================================================"
+
+echo -e "\nNeovim:"
+nvim --version
 
 echo -e "\nNim:"
 nim --version
@@ -55,8 +66,21 @@ echo -e "\nNimsuggest:"
 nimsuggest --version
 
 echo "================================================================================"
-
-echo "Run tests in $PWD"
 cd $current/other
-nim c tests/nimsuggest/suggestions.nim
-nim c tests/edb/edb.nim
+
+curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+cp nvimcfg/init.vim ~/.config/nvim/
+mkdir -p "$HOME/.config/nvim/undodir"
+mkdir -p "$HOME/.config/nvim/autoload"
+mkdir -p "$HOME/.config/nvim/view"
+cat ~/.config/nvim/autoload/plug.vim 
+
+tree ~/.config/nvim
+
+
+# echo "Run nim tests"
+# nim c tests/nimsuggest/suggestions.nim
+
+echo "================================================================================"
+echo "Run vim tests"
+./run_tests.sh
