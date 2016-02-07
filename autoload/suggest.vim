@@ -53,18 +53,12 @@ function! suggest#NewKnown(command, sync, useV2, file, line, col, handler)
     let result = copy(s:NimSuggest)
     let result.lines = []
     let result.file = a:file
-    let result.tempfile = result.file . ".temp"
     let result.line = a:line
     let result.col = a:col
     let result.handler = a:handler
     let result.isAsync = has("nvim") && !a:sync && g:nvim_nim_enable_async
-
-    " if a:useTempFile
-    "     call writefile(getline(1, '$'), result.tempfile)
-    " endif
-    " let nimcom = completion . " " . file . (a:useTempFile ? (";" . result.tempfile) : "") . ":" . line . ":" . col
-
-    let query = a:command . " " . result.file . ":" . result.line . ":" . result.col
+    let result.tempfile = util#WriteMemfile()
+    let query = a:command . " " . result.file . ";" . result.tempfile . ":" . result.line . ":" . result.col
 
     if !result.isAsync
         let jobcmdstr = g:nvim_nim_exec_nimsuggest . " " . (a:useV2 ? '--v2' : '') . " " . '--stdin' . " " . result.file

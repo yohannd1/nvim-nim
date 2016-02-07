@@ -102,9 +102,9 @@ function highlighter#New()
     let result.lines = []
     let result.job = jobstart([g:nvim_nim_exec_nimsuggest, '--v2', '--stdin', expand("%:p")], result)
     let result.file = expand("%:p")
-    let tempfile = result.file . ".temp"
-    call writefile(getline(1, '$'), tempfile)
-    call jobsend(result.job, "highlight " . result.file . ";" . tempfile . ":1:1\nquit\n") 
+    let result.tempfile = util#WriteMemfile()
+
+    call jobsend(result.job, "highlight " . result.file . ";" . result.tempfile . ":1:1\nquit\n") 
     if !exists("b:highlights")
         let b:highlights = []
     endif
