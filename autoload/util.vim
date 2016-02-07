@@ -222,6 +222,11 @@ endfunction
 
 function! util#SelectNimProc(inner)
     let curline = nextnonblank(line("."))
+    if curline == 0
+        let curline = prevnonblank(line("."))
+    endif
+
+    let curindent = indent(curline)
     let lastline = line("$")
     let sl = curline
 
@@ -230,14 +235,13 @@ function! util#SelectNimProc(inner)
     endfunction
 
     while sl > 0
-        if s:IsProcStart(sl) && (curline == sl || indent(sl) < indent(curline))
+        if s:IsProcStart(sl) && (curindent == -1 || curline == sl || indent(sl) < curindent)
             break
         endif
         let sl -= 1
     endwhile
 
     if !s:IsProcStart(sl)
-        normal <Esc>
         return
     endif
 
@@ -245,7 +249,7 @@ function! util#SelectNimProc(inner)
     normal! 0V
     let el = sl + 1
 
-    while getline(el) =~ "^\\s*$" || indent(el) > indent(sl)
+    while el < line("$") - 1 && (getline(el) =~ "^\\s*$" || indent(el) > indent(sl))
         let el += 1
     endwhile
 
