@@ -26,10 +26,14 @@ function! s:RenameImpl.run(data)
         endif
 
         if res.file != expand("%:p")
-            execute ":e " . expand("%:p")
+            execute ":e " . res.file
         endif
 
-        let left = getline(res.line)[0:res.col - 1]
+        if getline(res.line)[res.col] == '*'
+            let res.col -= len(res.name)
+        endif
+
+        let left = res.col != 0 ? getline(res.line)[0:res.col - 1] : ""
         let right = getline(res.line)[res.col + len(oldName):-1]
         call setline(res.line, left . newName . right)
     endfor

@@ -7,6 +7,8 @@ setlocal nolisp
 setlocal autoindent
 setlocal indentkeys=!^F,o,O,<:>,0),0],0},=elif
 setlocal indentexpr=NimIndent()
+setlocal foldmethod=indent
+setlocal foldexpr=NimIndent()
 
 function! Down()
     return indent(prevnonblank(v:lnum - 1)) - &tabstop
