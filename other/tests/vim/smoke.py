@@ -1,11 +1,11 @@
 from vimtest import cleanup, startNvim
-from time import sleep
 
 nvim = startNvim()
 
 
 def test_buffer():
     cleanup(nvim)
+    nvim.command("norm ggdG")
     nvim.command("norm ihello world")
     assert nvim.current.buffer[:] == ["hello world"]
 

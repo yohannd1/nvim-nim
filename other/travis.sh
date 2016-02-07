@@ -66,15 +66,18 @@ echo -e "\nNimsuggest:"
 nimsuggest --version
 
 echo "================================================================================"
-cd $current/other
 
+cd $current/other
 curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 cp nvimcfg/init.vim ~/.config/nvim/
 mkdir -p "$HOME/.config/nvim/undodir"
 mkdir -p "$HOME/.config/nvim/autoload"
 mkdir -p "$HOME/.config/nvim/view"
-cat ~/.config/nvim/autoload/plug.vim 
 
+cd ~/.config/nvim
+mkdir plugged
+cd plugged
+git clone https://github.com/baabelfish/nvim-nim
 tree ~/.config/nvim
 
 
@@ -83,4 +86,5 @@ tree ~/.config/nvim
 
 echo "================================================================================"
 echo "Run vim tests"
+cd $current/other
 ./run_tests.sh
