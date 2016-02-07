@@ -33,15 +33,15 @@ function! NimIndent()
         return Up()
     endif
 
-    if prevl =~ '\s*\(import\|type\)'
+    if prevl =~ '\s*\<\(import\|type\)\>'
         return Up()
     endif
 
-    if prevl =~ '\s*\(const\|var\|let\)\s*$'
+    if prevl =~ '\s*\<\(const\|var\|let\)\>\s*$'
         return Up()
     endif
 
-    if prevl =~ '\(object\|enum\|object\|concept\|tuple\)\s*$'
+    if prevl =~ '\<\(object\|enum\|object\|concept\|tuple\)\>\s*$'
         return Up()
     endif
 
