@@ -1,9 +1,9 @@
-" if exists("b:current_syntax")
-"   finish
-" endif
-" if version < 600
-"     syntax
-" endif
+if exists("b:current_syntax")
+  finish
+endif
+if version < 600
+    syntax
+endif
 
 let b:current_syntax = "nim"
 
@@ -155,7 +155,7 @@ highlight link nimStorage      Structure
 highlight link nimStorageClass StorageClass
 highlight link nimTypedef      Typedef
 
-if g:nvim_nim_highlighter_semantic
+if len(g:nvim_nim_highlighter_semantics) > 0
     hi Semantic0  guifg=#904719 gui=none
     hi Semantic1  guifg=#44f365 gui=none
     hi Semantic2  guifg=#503f43 gui=none

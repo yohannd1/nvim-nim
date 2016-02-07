@@ -26,7 +26,6 @@ let s:highlights = {
             \ 'skModule':       "Include",
             \ 'skPackage':      "Define",
             \ 'skParam':        "Identifier",
-            \ 'skResult':       "Keyword",
             \ 'skStub':         "PreCondit",
             \ 'skTemp':         "Identifier",
             \ 'skUnknown':      "Error",
@@ -90,8 +89,6 @@ function! s:NimHighlighter.on_exit()
             else
                 call add(b:highlights, matchaddpos(s:highlights[ctype], [[line, c, s]]))
             endif
-        else
-            echoerr "No such key: " . p[1]
         endif
     endfor
 

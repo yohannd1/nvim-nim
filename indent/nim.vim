@@ -55,9 +55,5 @@ function! NimIndent()
         return Down()
     endif
 
-    " if prevl =~ '[\])}]\s*$'
-    "     return Down()
-    " endif
-
     return -1
 endfunction
