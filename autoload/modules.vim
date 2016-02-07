@@ -60,7 +60,7 @@ function! modules#GetImports()
 
     let [begin, end] = modules#ImportLineRange()
     let lines = getline(begin, end)
-    return filter(split(substitute(join(lines, ""), ",", "", "g"), " "), 'v:val !~ "^ *$"')[1:-1]
+    return sort(filter(split(substitute(join(lines, ""), ",", "", "g"), " "), 'v:val !~ "^ *$"')[1:-1])
 endfunction
 
 function! modules#ImportMap(imports)

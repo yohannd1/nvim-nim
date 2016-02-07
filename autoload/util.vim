@@ -219,3 +219,46 @@ endfunction
 function! util#open_module_doc(module, symbol)
     call system("$BROWSER " . "http://nim-lang.org/docs/" . a:module . ".html#" . a:symbol)
 endfunction
+
+function! util#SelectNimProc(inner)
+    let curline = nextnonblank(line("."))
+    let lastline = line("$")
+    let sl = curline
+
+    function! s:IsProcStart(l)
+        return getline(a:l) =~ "\s*\\(proc\\|template\\|macro\\|func\\|method\\)\\s\\+\\w\\+("
+    endfunction
+
+    while sl > 0
+        if s:IsProcStart(sl) && (curline == sl || indent(sl) < indent(curline))
+            break
+        endif
+        let sl -= 1
+    endwhile
+
+    if !s:IsProcStart(sl)
+        normal <Esc>
+        return
+    endif
+
+    call cursor(sl, 0)
+    normal! 0V
+    let el = sl + 1
+
+    while getline(el) =~ "^\\s*$" || indent(el) > indent(sl)
+        let el += 1
+    endwhile
+
+    let el -= 1
+    if a:inner
+        while getline(el) =~ "^\\s*$"
+            let el -= 1
+        endwhile
+    endif
+
+    call cursor(el, 0)
+    normal! $
+    if a:inner
+        normal! h
+    endif
+endfunction

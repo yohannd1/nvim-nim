@@ -41,6 +41,11 @@ nnoremap <buffer> gd    :NimDefinition<cr>
 nnoremap <buffer> gt    :NimInfo<cr>
 nnoremap <buffer> gT    :NimWeb<cr>
 
+onoremap <silent>af :<C-U>call util#SelectNimProc(0)<CR>
+onoremap <silent>if :<C-U>call util#SelectNimProc(1)<CR>
+vnoremap <silent>af :<C-U>call util#SelectNimProc(0)<CR><Esc>gv
+vnoremap <silent>if :<C-U>call util#SelectNimProc(1)<CR><Esc>gv
+
 autocmd! BufReadPost,BufWritePost,CursorHold,InsertLeave,TextChanged,InsertEnter *.nim call highlighter#guard()
 autocmd! BufWinEnter,BufWritePost,FileWritePost *.nim call features#outline#run(1)
 autocmd! VimResized,WinEnter * call features#outline#render()
