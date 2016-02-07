@@ -18,6 +18,7 @@ DON'T INSTALL YET, STILL UNDER VERY HEAVY DEVELOPMENT.
     - Find usages (file and/or project)
 - Autocompletion
     - Nimsuggest autocompletion
+    - Autocomplete module names
 - IDE like stuff
     - Outline listing all symbols in the module (like tagbar)
     - Jump to documentation in web
@@ -33,5 +34,4 @@ DON'T INSTALL YET, STILL UNDER VERY HEAVY DEVELOPMENT.
 
 ## Planned features
 - Debugger support
-- Autocomplete modules
 - All features will work asynchronously
