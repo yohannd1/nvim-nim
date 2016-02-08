@@ -45,7 +45,7 @@ function! NimIndent()
         return Up()
     endif
 
-    if prevl =~ '^\(const\|var\|let\).*\s*if\s*.*$'
+    if prevl =~ '^\<\(const\|var\|let\)\>.*\s*if\s*.*$'
         return Up()
     endif
 

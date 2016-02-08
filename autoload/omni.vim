@@ -31,7 +31,9 @@ function! omni#nimsuggest(file, l, c)
     let completions_raw = split(system(fullcmd), "\n")[4:-2]
 
     for line in completions_raw
-        call add(completions, omni#item(util#ParseV2(line)))
+        if len(split(line, "	")) > 7
+            call add(completions, omni#item(util#ParseV2(line)))
+        endif
     endfor
 
     return completions
