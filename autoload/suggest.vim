@@ -35,7 +35,6 @@ endfunction
 
 function! s:NimSuggest.on_exit()
     let self.lines = util#FilterCompletions(self.lines)
-
     if len(self.lines) > 0
         call self.handler.run(self)
     else

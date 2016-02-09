@@ -73,6 +73,8 @@ function! s:ConfigureOutlineBuffer()
     setlocal buftype=nofile
     setlocal nonumber
     setlocal nowrap
+    exec "silent vertical resize " . g:nvim_nim_outline_buffer_width
+    setlocal wfw
     nnoremap <buffer><silent> <return> :call features#outline#JumpToSymbol(0)<cr>
     nnoremap <buffer><silent> o        :call features#outline#JumpToSymbol(1)<cr>
 endfunction

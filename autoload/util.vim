@@ -151,7 +151,7 @@ endfunction
 
 
 function! util#FilterCompletionLine(line)
-    let result = a:line =~ "^\\(def\\|sug\\|use\\|con\\)\\t"
+    let result = a:line =~ "^\\(def\\|sug\\|use\\|con\\|outline\\|highlight\\)\\t"
     return result
 endfunction
 
