@@ -34,13 +34,7 @@ function! s:NimSuggest.on_stderr(job, chunk)
 endfunction
 
 function! s:NimSuggest.on_exit()
-    let temparr = []
-    for line in self.lines
-        if len(split(line, "	")) > 6
-            call add(temparr, line)
-        endif
-    endfor
-    let self.lines = temparr
+    let self.lines = util#FilterCompletions(self.lines)
 
     if len(self.lines) > 0
         call self.handler.run(self)
@@ -63,8 +57,10 @@ function! suggest#NewKnown(command, sync, useV2, file, line, col, handler)
     if !result.isAsync
         let jobcmdstr = g:nvim_nim_exec_nimsuggest . " " . (a:useV2 ? '--v2' : '') . " " . '--stdin' . " " . result.file
         let fullcmd = 'echo -e ' . shellescape(query, 1) . '|' . jobcmdstr
-        let result.lines = split(system(fullcmd), "\n")[4:-2]
-        call a:handler.run(result)
+        let result.lines = util#FilterCompletions(split(system(fullcmd), "\n"))
+        if len(result.lines) > 0
+            call a:handler.run(result)
+        endif
     else
         call util#StartQuery()
         let result.job_server = jobstart([g:nvim_nim_exec_nimsuggest, '--port:5999', '--address:localhost', (a:useV2 ? '--v2' : ''), result.file], s:NimSuggestServer)

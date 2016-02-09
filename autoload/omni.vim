@@ -28,12 +28,10 @@ function! omni#nimsuggest(file, l, c)
     let query = "sug " . a:file . ";" . tempfile . ":" . a:l . ":" . a:c
     let jobcmdstr = g:nvim_nim_exec_nimsuggest . " --v2 --stdin " . a:file
     let fullcmd = 'echo -e ' . shellescape(query, 1) . '|' . jobcmdstr
-    let completions_raw = split(system(fullcmd), "\n")[4:-2]
+    let completions_raw = util#FilterCompletions(split(system(fullcmd), "\n"))
 
     for line in completions_raw
-        if len(split(line, "	")) > 7
-            call add(completions, omni#item(util#ParseV2(line)))
-        endif
+        call add(completions, omni#item(util#ParseV2(line)))
     endfor
 
     return completions

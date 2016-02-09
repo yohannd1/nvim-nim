@@ -9,7 +9,7 @@ let b:current_syntax = "nim"
 
 
 " Keywords
-syntax keyword nimKeyword let const var static
+syntax keyword nimKeyword let const var static async await
 syntax keyword nimKeyword addr asm atomic bind cast defer discard
 syntax keyword nimKeyword do expr stmt end generic mixin iterator
 syntax keyword nimKeyword typedesc openarray out ptr ref return using 

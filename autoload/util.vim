@@ -150,6 +150,23 @@ function! util#ParseV2(line)
 endfunction
 
 
+function! util#FilterCompletionLine(line)
+    let result = a:line =~ "^\\(def\\|sug\\|use\\|con\\)\\t"
+    return result
+endfunction
+
+
+function! util#FilterCompletions(lines)
+    let result = []
+    for line in a:lines
+        if util#FilterCompletionLine(line)
+            call add(result, line)
+        endif
+    endfor
+    return result
+endfunction
+
+
 let s:nesting_chars = ['(', '[', '{']
 let s:unnesting_chars = [')', ']', '}']
 let s:strip_regex = '\v^\s*(.{-})\s*$'
