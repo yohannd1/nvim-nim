@@ -14,7 +14,7 @@ endfunction
 let s:window = -1
 let s:goto_table = {}
 let s:groups = {}
-let s:group_order = ["Types", "Callables", "Constants", "Globals", "Imports"]
+let s:group_order = ["Types", "Routines", "Constants", "Globals", "Imports"]
 let s:symbols = {
             \ 'skProc':         "proc",
             \ 'skTemplate':     "template",
@@ -39,12 +39,12 @@ let s:symbols = {
             " \ 'skField':     "Fields",
 let s:group_aliases = {
             \ 'skType':      "Types",
-            \ 'skProc':      "Callables",
-            \ 'skTemplate':  "Callables",
-            \ 'skMacro':     "Callables",
-            \ 'skMethod':    "Callables",
-            \ 'skConverter': "Callables",
-            \ 'skIterator':  "Callables",
+            \ 'skProc':      "Routines",
+            \ 'skTemplate':  "Routines",
+            \ 'skMacro':     "Routines",
+            \ 'skMethod':    "Routines",
+            \ 'skConverter': "Routines",
+            \ 'skIterator':  "Routines",
             \ 'skConst':     "Constants",
             \ 'skLet':       "Constants",
             \ 'skGlobalVar': "Globals",
@@ -171,7 +171,7 @@ let s:OutlineImpl = {}
 function! s:OutlineImpl.run(data)
     let s:groups = {
                 \ "Types":     [],
-                \ "Callables": [],
+                \ "Routines": [],
                 \ "Fields":    [],
                 \ "Constants": [],
                 \ "Globals":   [],
