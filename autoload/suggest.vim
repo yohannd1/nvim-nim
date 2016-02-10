@@ -5,25 +5,8 @@ let s:loaded = 1
 
 
 let s:findInProject = 1
-let s:NimSuggestServer = {
-            \ 'pty': 1,
-            \ }
-
-function! s:NimSuggestServer.on_stdout(job, chunk)
-    " echoerr join(a:chunk, "\n")
-endfunction
-function! s:NimSuggestServer.on_stderr(job, chunk)
-    " echoerr join(a:chunk, "\n")
-endfunction
-function! s:NimSuggestServer.on_exit()
-    " call jobstop(self.job_server)
-endfunction
-
-
-
-" NimSuggest
 let s:NimSuggest = {
-            \ 'pty': 1,
+            \ 'pty': 0,
             \ }
 
 function! s:NimSuggest.on_stdout(job, chunk)
@@ -33,14 +16,22 @@ endfunction
 function! s:NimSuggest.on_stderr(job, chunk)
 endfunction
 
+
 function! s:NimSuggest.on_exit()
+    echo ""
     let self.lines = util#FilterCompletions(self.lines)
     if len(self.lines) > 0
         call self.handler.run(self)
     else
-        echo ""
+        echohl Comment | echo "Got nothing" | echohl Normal
     endif
 endfunction
+
+
+function! suggest#CreateJob(useV2, file, callbacks)
+    return jobstart([g:nvim_nim_exec_nimsuggest, '--stdin', (a:useV2 ? '--v2' : ''), a:file], a:callbacks)
+endfunction
+
 
 function! suggest#NewKnown(command, sync, useV2, file, line, col, handler)
     let result = copy(s:NimSuggest)
@@ -59,16 +50,16 @@ function! suggest#NewKnown(command, sync, useV2, file, line, col, handler)
         let result.lines = util#FilterCompletions(split(system(fullcmd), "\n"))
         if len(result.lines) > 0
             call a:handler.run(result)
+        else
+            echohl Comment | echo "Got nothing" | echohl Normal
         endif
     else
         call util#StartQuery()
-        let result.job_server = jobstart([g:nvim_nim_exec_nimsuggest, '--port:5999', '--address:localhost', (a:useV2 ? '--v2' : ''), result.file], s:NimSuggestServer)
-        if result.job_server < 1
-            echoerr "Unable to start server"
+        let result.job = suggest#CreateJob(a:useV2, result.file, result)
+        if result.job > 0
+            call jobsend(result.job, query . "\nquit\n")
         else
-            " FIXME: Telnet is not possibly the best way to communicate :S
-            let result.job_suggest = jobstart(['telnet', 'localhost', '5999'], result)
-            call jobsend(result.job_suggest, query . "\n")
+            echoerr "Unable to start server"
         endif
     endif
     return result

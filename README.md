@@ -1,9 +1,9 @@
 # nvim-nim [![Build Status](https://travis-ci.org/baabelfish/nvim-nim.svg?branch=master)](https://travis-ci.org/baabelfish/nvim-nim)
-Nim support for vim and advanced support for neovim.
+Nim support for vim and advanced support for neovim. Still in heavy development.
 
-DON'T INSTALL YET, STILL UNDER VERY HEAVY DEVELOPMENT.
 
 ## Features
+- Asynchronous
 - Syntax highlighting
     - Normal vim highlight
     - More intelligent highlight with nimsuggest
@@ -17,7 +17,7 @@ DON'T INSTALL YET, STILL UNDER VERY HEAVY DEVELOPMENT.
     - Get symbol information (type, module, file, signature, etc...)
     - Find usages (file and/or project)
 - Autocompletion
-    - Nimsuggest autocompletion
+    - Nimsuggest omnicompletion
     - Autocomplete module names
 - IDE like stuff
     - Outline listing all symbols in the module (like tagbar)
@@ -29,9 +29,10 @@ DON'T INSTALL YET, STILL UNDER VERY HEAVY DEVELOPMENT.
     - Send current buffer
     - Send selection
 
+
 ![something](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/pic1.png)
 
 
 ## Planned features
 - Debugger support
-- All features will work asynchronously
+- Async autocomplete with deoplete (maybe a seperate plugin)

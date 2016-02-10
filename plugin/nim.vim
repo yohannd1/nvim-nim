@@ -1,7 +1,7 @@
-if exists("s:loaded")
+if exists("g:nvim_nim_loaded")
     finish
 endif
-let s:loaded = 1
+let g:nvim_nim_loaded = 1
 
 
 function! CheckDependency(command)

@@ -51,6 +51,6 @@ vnoremap <silent>af :<C-U>call util#SelectNimProc(0)<CR><Esc>gv
 vnoremap <silent>if :<C-U>call util#SelectNimProc(1)<CR><Esc>gv
 
 autocmd! BufReadPost,BufWritePost,CursorHold,InsertLeave,TextChanged,InsertEnter *.nim call highlighter#guard()
-autocmd! BufWinEnter,BufWritePost,FileWritePost *.nim call features#outline#run(1)
+autocmd! CursorHold,BufWritePost,FileWritePost *.nim call features#outline#run(1)
 autocmd! VimResized,WinEnter * call features#outline#render()
 call highlighter#guard()

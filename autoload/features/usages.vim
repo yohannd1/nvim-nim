@@ -46,15 +46,13 @@ endfunction
 
 let s:UsagesDefinitionImpl = {}
 function! s:UsagesDefinitionImpl.run(data)
-    " let res = util#ParseV1(a:data.lines[0])
-    " call suggest#NewKnown("use", 1, res.file, res.line, res.col + 1, s:UsagesImpl)
-    call suggest#New("use", 1, 1, s:UsagesImpl)
+    call suggest#NewKnown("use", 0, 1, a:data.file, a:data.line, a:data.col, s:UsagesImpl)
 endfunction
 
 function! features#usages#run(findInProject)
     cclose
     call setqflist([])
     let s:findInProject = a:findInProject
-    call suggest#New("def", 1, 1, s:UsagesDefinitionImpl)
+    call suggest#New("def", 0, 1, s:UsagesDefinitionImpl)
 endfunction
 

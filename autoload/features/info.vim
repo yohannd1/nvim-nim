@@ -49,10 +49,10 @@ endfunction
 
 
 function! features#info#web()
-    call suggest#New("def", 1, 0, s:New(1))
+    call suggest#New("def", 0, 0, s:New(1))
 endfunction
 
 
 function! features#info#run()
-    call suggest#New("def", 1, 0, s:New(0))
+    call suggest#New("def", 0, 0, s:New(0))
 endfunction

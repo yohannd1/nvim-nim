@@ -191,7 +191,7 @@ endfunction
 
 function! features#outline#run(isUpdating)
     if !a:isUpdating || s:IsOpen()
-        call suggest#New("outline", 1, 1, s:OutlineImpl)
+        call suggest#New("outline", 0, 1, s:OutlineImpl)
     endif
 endfunction
 
