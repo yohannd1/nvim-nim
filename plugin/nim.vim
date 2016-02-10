@@ -1,8 +1,13 @@
-if exists("g:nvim_nim_loaded")
+scriptencoding utf-8
+
+
+if exists("g:loaded_nvim_nim")
     finish
 endif
-let g:nvim_nim_loaded = 1
+let g:loaded_nvim_nim = 1
 
+let s:save_cpo = &cpo
+set cpo&vim
 
 function! CheckDependency(command)
     if !executable(a:command)
@@ -28,25 +33,31 @@ if exists("g:ycm_semantic_triggers")
     let g:ycm_semantic_triggers["nim"] = ['.', '(']
 endif
 
-let g:nvim_nim_exec_nim        = CheckDependency("nim")
-let g:nvim_nim_exec_nimble     = CheckDependency("nimble")
-let g:nvim_nim_exec_nimsuggest = CheckDependency("nimsuggest")
-let g:nvim_nim_exec_bash       = CheckDependency("bash")
-let g:nvim_nim_deps_nim        = FindNimModulesPath()
-let g:nvim_nim_deps_nimble     = FindNimbleModulesPath()
+let g:nvim_nim_exec_nim                  = CheckDependency("nim")
+let g:nvim_nim_exec_nimble               = CheckDependency("nimble")
+let g:nvim_nim_exec_nimsuggest           = CheckDependency("nimsuggest")
+let g:nvim_nim_exec_bash                 = CheckDependency("bash")
+let g:nvim_nim_deps_nim                  = FindNimModulesPath()
+let g:nvim_nim_deps_nimble               = FindNimbleModulesPath()
 
-let g:nvim_nim_highlighter_enable     = 0
-let g:nvim_nim_enable_async           = 1
-let g:nvim_nim_highlight_builtin      = 1
-let g:nvim_nim_highlight_use_unite    = 0
+let g:nvim_nim_highlighter_enable        = 0
+let g:nvim_nim_enable_async              = 1
+let g:nvim_nim_highlight_builtin         = 1
+let g:nvim_nim_highlight_use_unite       = 0
 
-let g:nvim_nim_outline_buffer         = 1
-let g:nvim_nim_outline_buffer_width   = 30
+let g:nvim_nim_outline_buffer            = 1
+let g:nvim_nim_outline_buffer_width      = 30
 
-let g:nvim_nim_repl_height            = 14
-let g:nvim_nim_repl_vsplit            = 0
+let g:nvim_nim_repl_height               = 14
+let g:nvim_nim_repl_vsplit               = 0
+
+let g:nvim_nim_enable_default_binds      = 1
+let g:nvim_nim_enable_custom_textobjects = 1
 
 let g:nvim_nim_highlighter_semantics  = ["skConst", "skForVar", "skGlobalVar", "skGlobalLet", "skLet", "skModule", "skParam", "skTemp", "skVar"]
 
 au BufNewFile,BufRead *.nim setlocal filetype=nim
 au BufNewFile,BufRead *.nims setlocal filetype=nims
+
+let &cpo = s:save_cpo
+unlet s:save_cpo

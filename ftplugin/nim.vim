@@ -1,7 +1,5 @@
-if exists("b:loaded")
-    finish
-endif
-let b:loaded = 1
+scriptencoding utf-8
+
 
 setlocal iskeyword=a-z,A-Z,48-57,128-255,_
 setlocal formatoptions-=t formatoptions+=l
@@ -16,41 +14,54 @@ setlocal errorformat=
             \%E%f(%l\\,\ %c)\ Error:\ %m,
             \%W%f(%l\\,\ %c)\ Warning:\ %m
 
-command! NimDefinition          :call features#definition#run()
-command! NimInfo                :call features#info#run()
-command! NimWeb                 :call features#info#web()
-command! NimUsages              :call features#usages#run(0)
-command! NimUsagesProject       :call features#usages#run(1)
-command! NimRenameSymbol        :call features#rename#run(0)
-command! NimRenameSymbolProject :call features#rename#run(1)
-command! NimDebug               :call features#debug#run()
-command! NimOutline             :call features#outline#run(0)
+command! -buffer -nargs=* -complete=buffer NimDefinition          :call features#definition#run()
+command! -buffer -nargs=* -complete=buffer NimInfo                :call features#info#run()
+command! -buffer -nargs=* -complete=buffer NimWeb                 :call features#info#web()
+command! -buffer -nargs=* -complete=buffer NimUsages              :call features#usages#run(0)
+command! -buffer -nargs=* -complete=buffer NimUsagesProject       :call features#usages#run(1)
+command! -buffer -nargs=* -complete=buffer NimRenameSymbol        :call features#rename#run(0)
+command! -buffer -nargs=* -complete=buffer NimRenameSymbolProject :call features#rename#run(1)
+command! -buffer -nargs=* -complete=buffer NimDebug               :call features#debug#run()
+command! -buffer -nargs=* -complete=buffer NimOutline             :call features#outline#run(0)
 
-command! NimEdb                 :call features#debugger#run()
-command! NimEdbStop             :call features#debugger#stop()
-command! NimEdbContinue         :call features#debugger#continue()
-command! NimEdbStepInto         :call features#debugger#stepinto()
-command! NimEdbStepOver         :call features#debugger#stepover()
-command! NimEdbSkipCurrent      :call features#debugger#skipcurrent()
-command! NimEdbIgonore          :call features#debugger#ignore()
-command! NimEdbContinue         :call features#debugger#continue()
-command! NimEdbToggleBP         :call features#debugger#togglebp()
+command! -buffer -nargs=* -complete=buffer NimEdb                 :call features#debugger#run()
+command! -buffer -nargs=* -complete=buffer NimEdbStop             :call features#debugger#stop()
+command! -buffer -nargs=* -complete=buffer NimEdbContinue         :call features#debugger#continue()
+command! -buffer -nargs=* -complete=buffer NimEdbStepInto         :call features#debugger#stepinto()
+command! -buffer -nargs=* -complete=buffer NimEdbStepOver         :call features#debugger#stepover()
+command! -buffer -nargs=* -complete=buffer NimEdbSkipCurrent      :call features#debugger#skipcurrent()
+command! -buffer -nargs=* -complete=buffer NimEdbIgonore          :call features#debugger#ignore()
+command! -buffer -nargs=* -complete=buffer NimEdbContinue         :call features#debugger#continue()
+command! -buffer -nargs=* -complete=buffer NimEdbToggleBP         :call features#debugger#togglebp()
 
-command! NimREPL                :call features#repl#start()
-command! NimREPLEvalFile        :call features#repl#send(getline(0, line("$")))
-command! -range NimREPLEval     :call features#repl#send(getline(getpos("'<")[1], getpos("'>")[1]))
+command! -buffer -nargs=* -complete=buffer NimREPL                :call features#repl#start()
+command! -buffer -nargs=* -complete=buffer NimREPLEvalFile        :call features#repl#send(getline(0, line("$")))
+command! -buffer -nargs=* -complete=buffer -range NimREPLEval     :call features#repl#send(getline(getpos("'<")[1], getpos("'>")[1]))
 
-nnoremap <buffer> <c-]> :NimDefinition<cr>
-nnoremap <buffer> gd    :NimDefinition<cr>
-nnoremap <buffer> gt    :NimInfo<cr>
-nnoremap <buffer> gT    :NimWeb<cr>
+if exists('g:nvim_nim_enable_default_binds')
+    nnoremap <buffer> <c-]> :NimDefinition<cr>
+    nnoremap <buffer> gd    :NimDefinition<cr>
+    nnoremap <buffer> gt    :NimInfo<cr>
+    nnoremap <buffer> gT    :NimWeb<cr>
+endif
 
-onoremap <silent>af :<C-U>call util#SelectNimProc(0)<CR>
-onoremap <silent>if :<C-U>call util#SelectNimProc(1)<CR>
-vnoremap <silent>af :<C-U>call util#SelectNimProc(0)<CR><Esc>gv
-vnoremap <silent>if :<C-U>call util#SelectNimProc(1)<CR><Esc>gv
+if exists('g:nvim_nim_enable_custom_textobjects')
+    onoremap <buffer> <silent>af :<C-U>call util#SelectNimProc(0)<CR>
+    onoremap <buffer> <silent>if :<C-U>call util#SelectNimProc(1)<CR>
+    vnoremap <buffer> <silent>af :<C-U>call util#SelectNimProc(0)<CR><Esc>gv
+    vnoremap <buffer> <silent>if :<C-U>call util#SelectNimProc(1)<CR><Esc>gv
+endif
 
-autocmd! BufReadPost,BufWritePost,CursorHold,InsertLeave,TextChanged,InsertEnter *.nim call highlighter#guard()
-autocmd! CursorHold,BufWritePost,FileWritePost *.nim call features#outline#run(1)
-autocmd! VimResized,WinEnter * call features#outline#render()
-call highlighter#guard()
+augroup nvim_nim_highlighter
+    autocmd! BufReadPost,BufWritePost,CursorHold,InsertLeave,TextChanged,InsertEnter *.nim call highlighter#guard()
+augroup END
+
+augroup nvim_nim_outline
+    " autocmd! CursorHold,BufWritePost,FileWritePost *.nim call features#outline#run(1)
+    autocmd! CursorHold,FileWritePost *.nim call features#outline#run(1)
+    autocmd! VimResized,WinEnter * call features#outline#render()
+augroup END
+
+if g:nvim_nim_highlighter_enable
+    call highlighter#guard()
+endif

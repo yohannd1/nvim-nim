@@ -1,7 +1,7 @@
-if exists("s:loaded")
-    finish
-endif
-let s:loaded = 1
+scriptencoding utf-8
+
+let s:save_cpo = &cpo
+set cpo&vim
 
 
 function! features#debug#run()
@@ -13,3 +13,7 @@ function! features#debug#run()
     echo "Nimble:     " . g:nvim_nim_exec_nimble
     echo "Nimsuggest: " . g:nvim_nim_exec_nimsuggest
 endfunction
+
+
+let &cpo = s:save_cpo
+unlet s:save_cpo

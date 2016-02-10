@@ -1,3 +1,6 @@
+scriptencoding utf-8
+
+
 if exists("s:loaded")
     finish
 endif

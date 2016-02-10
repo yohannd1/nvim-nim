@@ -1,7 +1,8 @@
-if exists("s:loaded")
-    finish
-endif
-let s:loaded = 1
+scriptencoding utf-8
+
+let s:save_cpo = &cpo
+set cpo&vim
+
 
 function! features#outline#renderable(parsed)
     return {
@@ -13,6 +14,7 @@ endfunction
 
 let s:window = -1
 let s:goto_table = {}
+let s:buffermap = {}
 let s:groups = {}
 let s:group_order = ["Types", "Routines", "Constants", "Globals", "Imports"]
 let s:symbols = {
@@ -62,6 +64,25 @@ function! s:CreateSymbolRow(symbol)
     return result
 endfunction
 
+function! s:FindClosest()
+    if len(s:goto_table) == 0
+        return 
+    endif
+
+    echoerr join(sort(map(keys(s:buffermap), 'str2nr(v:val)'), "n"), ", ")
+    let bline = line(".")
+    let closest = 1
+    for l in sort(map(keys(s:buffermap), 'str2nr(v:val)'), "n")
+        if l < bline
+            let closest = l
+        else
+            break
+        endif
+    endfor
+
+    echom closest
+endfunction
+
 function! s:ConfigureOutlineBuffer()
     if s:IsOpen()
         return
@@ -101,6 +122,7 @@ endfunction
 
 function! s:UpdateOutline(groups)
     let s:goto_table = {}
+    let s:buffermap = {}
     let s:groups = a:groups
     call s:ConfigureOutlineBuffer()
     call s:RenderOutline()
@@ -109,10 +131,16 @@ endfunction
 function! s:RenderOutline()
     let wasFocused = s:IsFocused()
 
+    call s:FindClosest()
+
     call s:Focus()
     if !s:IsFocused()
         return
     endif
+
+    let l = line(".")
+    let c = line(".")
+    let w0 = line("w0")
 
     exec "silent vertical resize " . g:nvim_nim_outline_buffer_width
 
@@ -127,6 +155,7 @@ function! s:RenderOutline()
 
         for symbol in s:groups[groupname]
             let s:goto_table[len(rlines) + 1] = [symbol.line, symbol.col]
+            let s:goto_table[symbol.line] = [len(rlines) + 1]
             call add(rlines, s:CreateSymbolRow(symbol))
         endfor
         call add(rlines, "")
@@ -140,6 +169,11 @@ function! s:RenderOutline()
 
     exec ":" . len(rlines)
     normal! dG
+
+    call cursor(w0, 1)
+    normal zt
+    call cursor(l, 2)
+
     if !wasFocused
         wincmd p
     endif
@@ -195,3 +229,6 @@ function! features#outline#run(isUpdating)
     endif
 endfunction
 
+
+let &cpo = s:save_cpo
+unlet s:save_cpo

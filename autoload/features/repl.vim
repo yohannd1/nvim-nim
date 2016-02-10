@@ -1,7 +1,8 @@
-if exists("s:loaded")
-    finish
-endif
-let s:loaded = 1
+scriptencoding utf-8
+
+let s:save_cpo = &cpo
+set cpo&vim
+
 
 let s:repl_pid = -1
 let s:repl_window = -1
@@ -65,3 +66,7 @@ function! features#repl#stop()
         echom "No REPL running"
     endif
 endfunction
+
+
+let &cpo = s:save_cpo
+unlet s:save_cpo

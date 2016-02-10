@@ -1,3 +1,6 @@
+scriptencoding utf-8
+
+
 if exists("s:loaded")
     finish
 endif
@@ -95,7 +98,7 @@ endfunction
 
 
 function! util#StartQuery()
-    echohl Comment | echo "..."
+    " echohl Comment | echo "..."
 endfunction
 
 

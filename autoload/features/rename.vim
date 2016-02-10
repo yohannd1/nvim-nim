@@ -1,7 +1,8 @@
-if exists("s:loaded")
-    finish
-endif
-let s:loaded = 1
+scriptencoding utf-8
+
+let s:save_cpo = &cpo
+set cpo&vim
+
 
 let s:RenameImpl = {}
 
@@ -36,3 +37,7 @@ function! features#rename#run(inProject)
     call suggest#New("use", 0, 1, s:RenameImpl)
 endfunction
 
+
+
+let &cpo = s:save_cpo
+unlet s:save_cpo

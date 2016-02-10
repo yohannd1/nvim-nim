@@ -1,5 +1,8 @@
+scriptencoding utf-8
+
+
 syntax keyword nimoTypes      Types
-syntax keyword nimoCallables  Callables
+syntax keyword nimoCallables  Routines
 syntax keyword nimoConstants  Constants
 syntax keyword nimoGlobals    Globals
 syntax keyword nimoImports    Imports

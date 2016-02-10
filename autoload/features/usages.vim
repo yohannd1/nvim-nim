@@ -1,7 +1,7 @@
-if exists("s:loaded")
-    finish
-endif
-let s:loaded = 1
+scriptencoding utf-8
+
+let s:save_cpo = &cpo
+set cpo&vim
 
 
 let s:highlights = -1
@@ -56,3 +56,7 @@ function! features#usages#run(findInProject)
     call suggest#New("def", 0, 1, s:UsagesDefinitionImpl)
 endfunction
 
+
+
+let &cpo = s:save_cpo
+unlet s:save_cpo

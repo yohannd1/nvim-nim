@@ -1,7 +1,7 @@
-if exists("s:loaded")
-    finish
-endif
-let s:loaded = 1
+scriptencoding utf-8
+
+let s:save_cpo = &cpo
+set cpo&vim
 
 
 let s:InfoImpl = {}
@@ -56,3 +56,7 @@ endfunction
 function! features#info#run()
     call suggest#New("def", 0, 0, s:New(0))
 endfunction
+
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
