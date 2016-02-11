@@ -14,6 +14,7 @@ endfunction
 
 let s:window = -1
 let s:goto_table = {}
+let s:current_buffer = -1
 let s:buffermap = {}
 let s:groups = {}
 let s:group_order = ["Types", "Routines", "Constants", "Globals", "Imports"]
@@ -76,7 +77,7 @@ function! s:FindClosest()
     let bline = line(".")
     let closest = 1
     for l in sort(map(keys(s:buffermap), 'str2nr(v:val)'), "n")
-        if l < bline
+        if l <= bline
             let closest = l
         else
             return closest
@@ -120,6 +121,8 @@ function! features#outline#JumpToSymbol(stay)
         normal! zt
         wincmd p
     endif
+
+    call features#outline#run(0)
 endfunction
 
 function! s:UpdateOutline(groups)
@@ -163,7 +166,7 @@ function! s:RenderOutline()
             if g:nvim_nim_outline_track_symbol
                 let s:buffermap[symbol.line] = len(rlines) + 1
             endif
-            call add(rlines, s:CreateSymbolRow(symbol, closest == symbol.line))
+            call add(rlines, s:CreateSymbolRow(symbol, !wasFocused && closest == symbol.line))
         endfor
         call add(rlines, "")
     endfor
@@ -216,6 +219,7 @@ endfunction
 
 let s:OutlineImpl = {}
 function! s:OutlineImpl.run(data)
+    let s:OutlineImpl.cache = a:data
     let s:groups = {
                 \ "Types":     [],
                 \ "Routines": [],
@@ -236,9 +240,20 @@ function! s:OutlineImpl.run(data)
     call s:UpdateOutline(s:groups)
 endfunction
 
+
+function! s:BufferModified()
+    return buffer_number(".") != s:current_buffer || getbufvar(buffer_number("."), "&mod")
+endfunction
+
+
 function! features#outline#run(isUpdating)
     if !a:isUpdating || s:IsOpen()
+        " if s:BufferModified()
+        let s:current_buffer = winnr()
         call suggest#New("outline", 0, 1, s:OutlineImpl)
+        " else
+            " call s:OutlineImpl.run(s:OutlineImpl.cache)
+        " endif
     endif
 endfunction
 
