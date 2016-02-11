@@ -56,8 +56,12 @@ let s:group_aliases = {
             \ 'skPackage':   "Imports",
             \ }
 
-function! s:CreateSymbolRow(symbol)
-    let result = " » " . a:symbol.name
+function! s:CreateSymbolRow(symbol, active)
+    if g:nvim_nim_outline_track_symbol && a:active
+        let result = " «» " . a:symbol.name
+    else
+        let result = "  » " . a:symbol.name
+    endif
     if len(s:symbols[a:symbol.kind]) > 0
         let result .= " (" . s:symbols[a:symbol.kind] . ")"
     endif
@@ -69,18 +73,16 @@ function! s:FindClosest()
         return 
     endif
 
-    echoerr join(sort(map(keys(s:buffermap), 'str2nr(v:val)'), "n"), ", ")
     let bline = line(".")
     let closest = 1
     for l in sort(map(keys(s:buffermap), 'str2nr(v:val)'), "n")
         if l < bline
             let closest = l
         else
-            break
+            return closest
         endif
     endfor
-
-    echom closest
+    return 0
 endfunction
 
 function! s:ConfigureOutlineBuffer()
@@ -130,8 +132,11 @@ endfunction
 
 function! s:RenderOutline()
     let wasFocused = s:IsFocused()
+    let closest = 0
 
-    call s:FindClosest()
+    if g:nvim_nim_outline_track_symbol
+        let closest = s:FindClosest()
+    endif
 
     call s:Focus()
     if !s:IsFocused()
@@ -155,8 +160,10 @@ function! s:RenderOutline()
 
         for symbol in s:groups[groupname]
             let s:goto_table[len(rlines) + 1] = [symbol.line, symbol.col]
-            let s:goto_table[symbol.line] = [len(rlines) + 1]
-            call add(rlines, s:CreateSymbolRow(symbol))
+            if g:nvim_nim_outline_track_symbol
+                let s:buffermap[symbol.line] = len(rlines) + 1
+            endif
+            call add(rlines, s:CreateSymbolRow(symbol, closest == symbol.line))
         endfor
         call add(rlines, "")
     endfor
@@ -170,9 +177,15 @@ function! s:RenderOutline()
     exec ":" . len(rlines)
     normal! dG
 
-    call cursor(w0, 1)
-    normal zt
-    call cursor(l, 2)
+    if !wasFocused && g:nvim_nim_outline_track_symbol && closest != 0
+        call cursor(s:buffermap[closest], 2)
+        normal zz
+        normal ^
+    else
+        call cursor(w0, 1)
+        normal zt
+        call cursor(l, 2)
+    endif
 
     if !wasFocused
         wincmd p

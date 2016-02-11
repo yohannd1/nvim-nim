@@ -8,6 +8,7 @@ syntax keyword nimoGlobals    Globals
 syntax keyword nimoImports    Imports
 
 syntax match nimoSeparator  "[»()<>\[\]]"
+syntax match nimoActive     "«»\s.*$"
 syntax match nimoDetail     "(\(\w\+\))"
 
 hi link nimoConstants  Constant
@@ -24,6 +25,7 @@ hi link nimoProcs      Function
 hi link nimoTemplates  Function
 hi link nimoTypes      Type
 hi link nimoSeparator  Comment
+hi link nimoActive     Typedef
 
 hi link nimoTypes      Type
 hi link nimoCallables  Function
