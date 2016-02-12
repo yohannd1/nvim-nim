@@ -6,7 +6,7 @@ if exists("s:loaded")
 endif
 let s:loaded = 1
 
-let s:highlights = {
+let s:all_highlights = {
             \ 'skProc':         "Function",
             \ 'skTemplate':     "PreProc",
             \ 'skType':         "Type",
@@ -34,6 +34,8 @@ let s:highlights = {
             \ 'skUnknown':      "Error",
             \ 'skVar':          "Constant",
             \ }
+
+let s:highlights = {}
 
 
 let s:NimHighlighter = {
@@ -110,6 +112,14 @@ function highlighter#New()
         let b:highlights = []
     endif
     return result
+endfunction
+
+
+function! highlighter#select_highlights(kinds)
+    let s:highlights = {}
+    for kind in a:kinds
+        let s:highlights[kind] = s:all_highlights[kind]
+    endfor
 endfunction
 
 
