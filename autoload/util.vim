@@ -1,10 +1,7 @@
 scriptencoding utf-8
 
-
-if exists("s:loaded")
-    finish
-endif
-let s:loaded = 1
+let s:save_cpo = &cpo
+set cpo&vim
 
 
 let s:idtypes = {
@@ -298,3 +295,7 @@ function! NimReplSend(motion_wiseness)
     echom str
     call features#repl#send(str)
 endfunction
+
+
+let &cpo = s:save_cpo
+unlet s:save_cpo

@@ -1,10 +1,9 @@
 scriptencoding utf-8
 
 
-if exists("s:loaded")
-    finish
-endif
-let s:loaded = 1
+let s:save_cpo = &cpo
+set cpo&vim
+
 
 let s:all_highlights = {
             \ 'skProc':         "Function",
@@ -51,13 +50,20 @@ endfunction
 function! s:NimHighlighter.on_stderr(job, chunk)
 endfunction
 
+function! Remove(id)
+    try
+        call matchdelete(a:id)
+    catch /E803:/
+    endtry
+endfunction
+
 function! s:NimHighlighter.on_exit()
     if empty(self.lines) && self.file != expand("%:p")
         return
     endif
 
     for m in b:highlights
-        call matchdelete(m)
+        call Remove(m)
     endfor
 
     let b:highlights = []
@@ -130,3 +136,7 @@ function! highlighter#guard()
         endif
     endif
 endfunction
+
+
+let &cpo = s:save_cpo
+unlet s:save_cpo

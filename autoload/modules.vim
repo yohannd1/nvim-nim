@@ -1,10 +1,8 @@
 scriptencoding utf-8
 
 
-if exists("s:loaded")
-    finish
-endif
-let s:loaded = 1
+let s:save_cpo = &cpo
+set cpo&vim
 
 
 function! modules#FindImportLocation()
@@ -83,3 +81,7 @@ endfunction
 function! modules#FindGlobalImports()
     return modules#ImportMap(globpath(g:nvim_nim_deps_nim, "**/*.nim", 0, 1))
 endfunction
+
+
+let &cpo = s:save_cpo
+unlet s:save_cpo

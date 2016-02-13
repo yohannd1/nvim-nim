@@ -180,7 +180,7 @@ function! s:RenderOutline()
     exec ":" . len(rlines)
     normal! dG
 
-    if !wasFocused && g:nvim_nim_outline_track_symbol && closest != 0
+    if !wasFocused && g:nvim_nim_outline_track_symbol && closest != 0 && has_key(s:buffermap, closest)
         call cursor(s:buffermap[closest], 2)
         normal zz
         normal ^
