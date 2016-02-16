@@ -57,7 +57,7 @@ let g:nvim_nim_repl_vsplit               = 0
 let g:nvim_nim_enable_default_binds      = 1
 let g:nvim_nim_enable_custom_textobjects = 1
 
-let g:nvim_nim_highlighter_enable        = 1
+let g:nvim_nim_highlighter_enable        = 0
 let g:nvim_nim_highlight_builtin         = 1
 " let g:nvim_nim_highlighter_semantics     = ["skConst", "skForVar", "skGlobalVar", "skGlobalLet", "skLet", "skModule", "skParam", "skTemp", "skVar"]
 let g:nvim_nim_highlighter_semantics     = []

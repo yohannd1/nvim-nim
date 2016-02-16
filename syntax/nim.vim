@@ -15,30 +15,30 @@ let b:current_syntax = "nim"
 syntax keyword nimKeyword let const var static async await
 syntax keyword nimKeyword addr asm atomic bind cast defer discard
 syntax keyword nimKeyword do expr stmt end generic mixin iterator
-syntax keyword nimKeyword typedesc openarray out ptr ref return using 
+syntax keyword nimKeyword typedesc openarray out ptr ref return using
 syntax keyword nimKeyword varargs with without yield nil
 
-syntax keyword nimRepeat       for    while
+syntax keyword nimRepeat       for    while   in
 syntax keyword nimBoolean      true   false
 syntax keyword nimConditional  if     elif    else    case      continue break
 syntax keyword nimDefine       from   as
 syntax keyword nimException    try    except  finally raise
 syntax keyword nimInclude      import include export
 syntax keyword nimLabel        of
-syntax keyword nimMacro        macro
+syntax keyword nimMacro        macro  template
 syntax keyword nimPreCondit    when   block
 syntax keyword nimStorage      tuple  enum    object  interface concept  distinct any
 syntax keyword nimStorageClass type
-syntax keyword nimTypedef      func   proc    method  template  converter
+syntax keyword nimTypedef      func   proc    method  converter
 
 syntax keyword nimTodo TODO FIXME
 
 
 " Operators
 syntax match nimOperatorAll "[&:?!@<>\|\~\.\^\=\/\+\-\*\$%]\+"
-syntax keyword nimOperator and or not xor shl shr div mod in notin is isnot of.
+syntax keyword nimOperator and or not xor shl shr div mod notin is isnot .
 syntax keyword nimOP9 div mod shl shr
-syntax keyword nimOP5 in notin is isnot not of
+syntax keyword nimOP5 notin is isnot not
 syntax keyword nimOP4 and
 syntax keyword nimOP3 or xor
 syntax match nimOP10        "[\$\^]"
@@ -51,9 +51,20 @@ syntax match nimOP1         "[\*+\/%&]="
 syntax match nimOP0         "=>"
 syntax match nimOP0         "\->"
 
+syntax match nimFunction  /[a-z,A-Z,0-9]\+\ze(/
+
 
 " Comments
 syntax match nimComment "\v#.*$" contains=nimTodo
+syntax region nimComment start="#\+\[" end="\]#\+" contains=nimTodo
+
+" Pragmas
+syntax region nimPragma start=/{\./ end=/\.}/
+
+" String
+syntax match nimStringLiterals /\\n\|\\r\|\\c\|\\l\|\\f\|\\t\|\\v\|\\\\|\\"\|\\\'\|\\a\|\\b\|\\e\|\\x\x\x\|[0-9]\+/
+syntax region nimString start=/\v"/ skip=/\v\\./ end=/\v"/ contains=nimStringLiterals
+syntax match nimChar /\'\(\\n\|\\r\|\\c\|\\l\|\\f\|\\t\|\\v\|\\\\|\\"\|\\\'\|\\a\|\\b\|\\e\|.\)\'/
 
 
 syntax keyword nimBuiltinFunction assert echo debugEcho GC_addCycleRoot GC_disable
@@ -115,36 +126,36 @@ syntax match nimToken "(\."
 syntax match nimToken "\.)"
 
 
-" String
-syntax region nimString start=/\v"/ skip=/\v\\./ end=/\v"/
-
 " Linking
-highlight link nimBuiltinIterators Typedef
-highlight link nimBuiltinFunction  Function
-highlight link nimBuiltinType      Type
-highlight link nimComment          Comment
-highlight link nimKeyword          Keyword
-highlight link nimTodo             Todo
-highlight link nimOperatorAll      Operator
-highlight link nimOP10             Operator10
-highlight link nimOP9              Operator9
-highlight link nimOP8              Operator8
-highlight link nimOP7              Operator7
-highlight link nimOP6              Operator6
-highlight link nimOP5              Operator5
-highlight link nimOP4              Operator4
-highlight link nimOP3              Operator3
-highlight link nimOP2              Operator2
-highlight link nimOP1              Operator1
-highlight link nimOP0              Operator0
-highlight link nimToken            Delimiter
-highlight link nimSuffix           SpecialChar
 highlight link nimBoolean          Boolean
+highlight link nimBuiltinFunction  Function
+highlight link nimBuiltinIterators Typedef
+highlight link nimBuiltinType      Type
+highlight link nimChar             Character
+highlight link nimComment          Comment
 highlight link nimFloat            Float
-highlight link nimString           String
-highlight link nimChar             Char
+highlight link nimFunction         Function
+highlight link nimIdentifier       Identifier
+highlight link nimKeyword          Keyword
 highlight link nimNumber           Number
-highlight link nimString String
+highlight link nimOP0              Operator0
+highlight link nimOP1              Operator1
+highlight link nimOP10             Operator10
+highlight link nimOP2              Operator2
+highlight link nimOP3              Operator3
+highlight link nimOP4              Operator4
+highlight link nimOP5              Operator5
+highlight link nimOP6              Operator6
+highlight link nimOP7              Operator7
+highlight link nimOP8              Operator8
+highlight link nimOP9              Operator9
+highlight link nimOperatorAll      Operator
+highlight link nimString           String
+highlight link nimStringLiterals   Character
+highlight link nimPragma           String
+highlight link nimSuffix           SpecialChar
+highlight link nimTodo             Todo
+highlight link nimToken            Delimiter
 
 highlight link nimConditional  Conditional
 highlight link nimConstant     Constant
@@ -160,6 +171,7 @@ highlight link nimRepeat       Repeat
 highlight link nimStorage      Structure
 highlight link nimStorageClass StorageClass
 highlight link nimTypedef      Typedef
+highlight link nimOperator     Operator
 
 if len(g:nvim_nim_highlighter_semantics) > 0
     hi Semantic0  guifg=#904719 gui=none
