@@ -19,7 +19,7 @@ syntax keyword nimKeyword typedesc openarray out ptr ref return using
 syntax keyword nimKeyword varargs with without yield nil
 
 syntax keyword nimRepeat       for    while   in
-syntax keyword nimBoolean      true   false
+syntax keyword nimBoolean      true   false   on      off
 syntax keyword nimConditional  if     elif    else    case      continue break
 syntax keyword nimDefine       from   as
 syntax keyword nimException    try    except  finally raise
@@ -57,15 +57,14 @@ syntax match nimFunction  /[a-z,A-Z,0-9]\+\ze(/
 " Comments
 syntax match nimComment "\v#.*$" contains=nimTodo
 syntax region nimComment start="#\+\[" end="\]#\+" contains=nimTodo
+syntax match nimIdentifier /\w\+/
+highlight link nimIdentifier     Identifier
 
-" Pragmas
-syntax region nimPragma start=/{\./ end=/\.}/
 
 " String
-syntax match nimStringLiterals /\\n\|\\r\|\\c\|\\l\|\\f\|\\t\|\\v\|\\\\|\\"\|\\\'\|\\a\|\\b\|\\e\|\\x\x\x\|[0-9]\+/
+syntax match nimStringLiterals contained /\\n\|\\r\|\\c\|\\l\|\\f\|\\t\|\\v\|\\\\|\\"\|\\\'\|\\a\|\\b\|\\e\|\\x\x\x\|[0-9]\+/ containedin=nimString
 syntax region nimString start=/\v"/ skip=/\v\\./ end=/\v"/ contains=nimStringLiterals
 syntax match nimChar /\'\(\\n\|\\r\|\\c\|\\l\|\\f\|\\t\|\\v\|\\\\|\\"\|\\\'\|\\a\|\\b\|\\e\|.\)\'/
-
 
 syntax keyword nimBuiltinFunction assert echo debugEcho GC_addCycleRoot GC_disable
 syntax keyword nimBuiltinFunction GC_disableMarkAndSweep GC_enable GC_enableMarkAndSweep GC_fullCollect GC_getStatistics
@@ -94,7 +93,7 @@ syntax keyword nimBuiltinIterators countdown countup fieldPairs fields items lin
 syntax keyword nimBuiltinType int int8 int16 int32 int64 uint uint8 uint16 uint32 uint64 float float32 float64 bool char string cstring pointer Ordinal ptr ref expr stmt typedesc void auto any untyped typed SomeSignedInt SomeUnsignedInt SomeInteger SomeOrdinal SomeReal SomeNumber range array openArray varargs seq set Slice shared guarded byte Natural Positive RootObj RootRef RootEffect TimeEffect IOEffect ReadIOEffect WriteIOEffect ExecIOEffect Exception SystemError IOError OSError LibraryError ResourceExhaustedError ArithmeticError DivByZeroError OverflowError AccessViolationError AssertionError ValueError KeyError OutOfMemError IndexError FieldError RangeError StackOverflowError ReraiseError ObjectAssignmentError ObjectConversionError FloatingPointError FloatInvalidOpError FloatDivByZeroError FloatOverflowError FloatUnderflowError FloatInexactError DeadThreadError TResult Endianness TaintedString LibHandle ProcAddr ByteAddress BiggestInt BiggestFloat clong culong cchar cschar cshort cint csize clonglong cfloat cdouble clongdouble cuchar cushort cuint culonglong cstringArray PFloat32 PFloat64 PInt64 PInt32 GC_Strategy PFrame TFrame File FileMode FileHandle THINSTANCE AlignType RefCount Utf16Char WideCString NimNode
 syntax keyword nimGlobals programResult globalRaiseHook localRaiseHook outOfMemHook stdin stdout stderr errorMessageWriter
 syntax keyword nimGlobals nimvm
-syntax keyword nimGlobals on off appType NoFakeVars isMainModule CompileDate CompileTime cpuEndian hostOS hostCPU QuitSuccess QuitFailure Inf NegInf NaN NimMajor NimMinor NimPatch NimVersion nativeStackTraceSupported
+syntax keyword nimGlobals appType NoFakeVars isMainModule CompileDate CompileTime cpuEndian hostOS hostCPU QuitSuccess QuitFailure Inf NegInf NaN NimMajor NimMinor NimPatch NimVersion nativeStackTraceSupported
 
 
 " Numbers
@@ -112,18 +111,29 @@ syntax match nimFloat "\v<[0-9_]+\.[0-9]+((f|F)(32|64|128))?>"
 syntax match nimToken "`"
 syntax match nimToken "("
 syntax match nimToken ")"
-syntax match nimToken "{"
-syntax match nimToken "}"
+" syntax match nimToken "{"
+" syntax match nimToken "}"
 syntax match nimToken "\["
 syntax match nimToken "\]"
 syntax match nimToken ","
 syntax match nimToken ";"
 syntax match nimToken "\[\."
 syntax match nimToken "\.\]"
-syntax match nimToken "{\."
-syntax match nimToken "\.}"
 syntax match nimToken "(\."
 syntax match nimToken "\.)"
+
+
+" Pragmas
+syntax case ignore
+syntax keyword nimPragmas contained bitsize bycopy byref compile disabling dynlib emit exportc extern header importc incompletestruct containedin=nimPragma
+syntax keyword nimPragmas contained link nodecl packed passc passl thread threadvar unchecked union varargs volatile acyclic asmnostackframe containedin=nimPragma
+syntax keyword nimPragmas contained assertions boundchecks callconv checks codegendecl compilation compiletime computedgoto deadcodeelim containedin=nimPragma
+syntax keyword nimPragmas contained deprecated destructor error experimental fatal final global hint hints immediate importcpp importobjc containedin=nimPragma
+syntax keyword nimPragmas contained injectstmt line linearscanend nilchecks noreturn nosideeffect optimization overflowchecks override patterns containedin=nimPragma
+syntax keyword nimPragmas contained pop pragma procvar pure push register shallow unroll warning warnings magic containedin=nimPragma
+syntax keyword nimPragmas contained tags nimcall benign push checks magic rtl inline closure dirty compilerproc inheritable containedin=nimPragma
+syntax region nimPragma start=/{\./ end=/\.}/ contains=nimPragmas,nimString,nimNumber,nimFloat,nimBoolean
+syntax case match
 
 
 " Linking
@@ -143,7 +153,7 @@ highlight link nimOP1              Operator1
 highlight link nimOP10             Operator10
 highlight link nimOP2              Operator2
 highlight link nimOP3              Operator3
-highlight link nimOP4              Operator4
+highlight link nimOP3              Operator4
 highlight link nimOP5              Operator5
 highlight link nimOP6              Operator6
 highlight link nimOP7              Operator7
@@ -152,7 +162,7 @@ highlight link nimOP9              Operator9
 highlight link nimOperatorAll      Operator
 highlight link nimString           String
 highlight link nimStringLiterals   Character
-highlight link nimPragma           String
+highlight link nimPragmas          Character
 highlight link nimSuffix           SpecialChar
 highlight link nimTodo             Todo
 highlight link nimToken            Delimiter
