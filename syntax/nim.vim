@@ -130,8 +130,8 @@ syntax keyword nimPragmas contained link nodecl packed passc passl thread thread
 syntax keyword nimPragmas contained assertions boundchecks callconv checks codegendecl compilation compiletime computedgoto deadcodeelim containedin=nimPragma
 syntax keyword nimPragmas contained deprecated destructor error experimental fatal final global hint hints immediate importcpp importobjc containedin=nimPragma
 syntax keyword nimPragmas contained injectstmt line linearscanend nilchecks noreturn nosideeffect optimization overflowchecks override patterns containedin=nimPragma
-syntax keyword nimPragmas contained pop pragma procvar pure push register shallow unroll warning warnings magic containedin=nimPragma
-syntax keyword nimPragmas contained tags nimcall benign push checks magic rtl inline closure dirty compilerproc inheritable containedin=nimPragma
+syntax keyword nimPragmas contained pop pragma procvar pure push register shallow unroll warning warnings magic discardable inject containedin=nimPragma
+syntax keyword nimPragmas contained tags nimcall benign push checks magic rtl inline closure dirty compilerproc inheritable noinit effects requiresinit containedin=nimPragma
 syntax region nimPragma start=/{\./ end=/\.}/ contains=nimPragmas,nimString,nimNumber,nimFloat,nimBoolean
 syntax case match
 
