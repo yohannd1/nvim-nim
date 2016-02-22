@@ -4,7 +4,7 @@
 ==============================================================================
 CONTENTS                                                   *nim-contents*
 
-    1.Intro.................................................|NimIntro|
+    1.Introduction..........................................|NimIntro|
     2.Features..............................................|NimFeatures|
         2.1.Syntax highlighting.............................|NimSyntaxHL|
         2.2.Nimsuggest interaction..........................|NimSuggest|
@@ -21,19 +21,77 @@ CONTENTS                                                   *nim-contents*
     6.License...............................................|NimLicense|
 
 ==============================================================================
-1.Intro                                                     *NimIntro*
+1.Introduction                                              *NimIntro*
 
 ==============================================================================
 2.Features                                                  *NimFeatures*
+- It's... Asynchronous!
+- Syntax highlighting
+    - Normal vim highlight
+    - More intelligent highlight with nimsuggest
+    - Semantic highlighting for specified nim symbol kinds
+- Indentation
+- Error checking
+    - Using ``:make``
+    - Neomake
+- Project navigation with nimsuggest
+    - Jump to definition
+    - Get symbol information (type, module, file, signature, etc...)
+    - Find usages (file and/or project)
+- Autocompletion
+    - Nimsuggest omnicompletion
+    - Autocomplete module names
+- IDE like stuff
+    - Outline listing all symbols in the module (like tagbar)
+    - Jump to documentation in web
+    - Refactoring
+        - Rename symbol in file or project
+- REPL
+    - Open repl
+    - Send current buffer
+    - Send selection
+
+
 
 ------------------------------------------------------------------------------
 2.1.Syntax highlighting                                     *NimSyntaxHL*
 
+2.1.1Intelligent with nimsuggest                            *NimSyntaxHLI*
+
+Nimsuggest has the ability to highlight symbols in a buffer intelligently.
+When you declare your on proc it gives you the highlight information for
+every usage of that proc. When your routine call fails, your syntax
+highlighting will fail too.
+
+2.1.2Semantic highlighting                                  *NimSyntaxHLI*
+
+With the nimsuggest highlihgting it is possible to distinguish between
+different symbol types. You can specify which symbol kinds you want to
+be highlighted by hash made from their name.
+
+In case of
+
+for idx 1..10:
+    for jdx 1..0:
+        (idx * jdx).echo
+
+all cases of idx will be highlighted with their own random color and jdx
+with their own.
+
+
+
 ------------------------------------------------------------------------------
 2.2.Nimsuggest interaction                                  *NimSuggest*
 
+Nimsuggest is a tool replacing the original nim idetools. This plugin
+aims to use information given from nimsuggest to the fullest.
+
+
 ------------------------------------------------------------------------------
 2.1.Get symbol information                                  *NimSInfo*
+
+
+
 
 ------------------------------------------------------------------------------
 2.2.Goto symbol                                             *NimSGoto*

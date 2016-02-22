@@ -40,16 +40,19 @@ command! -buffer -nargs=* -complete=buffer -range NimREPLEval     :call features
 
 if exists('g:nvim_nim_enable_default_binds')
     nnoremap <buffer> <c-]> :NimDefinition<cr>
+    nnoremap <buffer> gf    :call util#goto_file()<cr>
     nnoremap <buffer> gd    :NimDefinition<cr>
     nnoremap <buffer> gt    :NimInfo<cr>
     nnoremap <buffer> gT    :NimWeb<cr>
+    nnoremap <buffer> cr    :NimRenameSymbol<cr>
+    nnoremap <buffer> cR    :NimRenameSymbolProject<cr>
 endif
 
 if exists('g:nvim_nim_enable_custom_textobjects')
-    onoremap <buffer> <silent>af :<C-U>call util#SelectNimProc(0)<CR>
-    onoremap <buffer> <silent>if :<C-U>call util#SelectNimProc(1)<CR>
-    vnoremap <buffer> <silent>af :<C-U>call util#SelectNimProc(0)<CR><Esc>gv
-    vnoremap <buffer> <silent>if :<C-U>call util#SelectNimProc(1)<CR><Esc>gv
+    onoremap <buffer> <silent>af :<C-U>call util#SelectNimProc(0)<cr>
+    onoremap <buffer> <silent>if :<C-U>call util#SelectNimProc(1)<cr>
+    vnoremap <buffer> <silent>af :<C-U>call util#SelectNimProc(0)<cr><Esc>gv
+    vnoremap <buffer> <silent>if :<C-U>call util#SelectNimProc(1)<cr><Esc>gv
 endif
 
 augroup nvim_nim_highlighter

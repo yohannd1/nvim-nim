@@ -285,6 +285,11 @@ function! util#SelectNimProc(inner)
 endfunction
 
 
+function! util#goto_file()
+    let module_loc = modules#moduleLocation(expand("<cword>"))
+endfunction
+
+
 call operator#user#define('nimrepl_send', 'NimReplSend')
 function! NimReplSend(motion_wiseness)
     let start = getpos("'[")

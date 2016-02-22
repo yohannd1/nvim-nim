@@ -83,5 +83,17 @@ function! modules#FindGlobalImports()
 endfunction
 
 
+function! modules#moduleLocation(str)
+    if has_key(modules#FindGlobalImports(), a:str)
+        return modules#FindGlobalImports()[a:str]
+    endif
+endfunction
+
+
+function! modules#isGlobalImport(str)
+    return has_key(modules#FindGlobalImports(), a:str)
+endfunction
+
+
 let &cpo = s:save_cpo
 unlet s:save_cpo

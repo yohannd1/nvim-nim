@@ -49,7 +49,12 @@ endfunction
 
 
 function! features#info#web()
-    call suggest#New("def", 0, 0, s:New(1))
+    let current_word = expand("<cword>")
+    if modules#isGlobalImport(current_word)
+        call util#open_module_doc(current_word, "")
+    else
+        call suggest#New("def", 0, 0, s:New(1))
+    endif
 endfunction
 
 

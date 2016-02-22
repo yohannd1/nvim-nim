@@ -35,21 +35,21 @@ syntax keyword nimTodo TODO FIXME
 
 
 " Operators
-syntax match nimOperatorAll "[&:?!@<>\|\~\.\^\=\/\+\-\*\$%]\+"
-syntax keyword nimOperator and or not xor shl shr div mod notin is isnot .
-syntax keyword nimOP9 div mod shl shr
-syntax keyword nimOP5 notin is isnot not
-syntax keyword nimOP4 and
-syntax keyword nimOP3 or xor
-syntax match nimOP10        "[\$\^]"
-syntax match nimOP9         "[\*\%\\\/]"
-syntax match nimOP6         "\."
-syntax match nimOP5         "[=|<|>]"
-syntax match nimOP5         "\v([!<>]\=)"
-syntax match nimOP2         "[@:?]"
-syntax match nimOP1         "[\*+\/%&]="
-syntax match nimOP0         "=>"
-syntax match nimOP0         "\->"
+syntax match   nimOperatorAll "[&:?!@<>\|\~\.\^\=\/\+\-\*\$%]\+"
+syntax keyword nimOperator    not   xor shl shr div mod notin is isnot .
+syntax keyword nimOP9         div   mod shl   shr
+syntax keyword nimOP5         notin is  isnot not
+syntax keyword nimOP4         and
+syntax keyword nimOP3         or    xor
+syntax match   nimOP10        "[\$\^]"
+syntax match   nimOP9         "[\*\%\\\/]"
+syntax match   nimOP6         "\."
+syntax match   nimOP5         "[=|<|>]"
+syntax match   nimOP5         "\v([!<>]\=)"
+syntax match   nimOP2         "[@:?]"
+syntax match   nimOP1         "[\*+\/%&]="
+syntax match   nimOP0         "=>"
+syntax match   nimOP0         "\->"
 
 syntax match nimFunction  /[a-z,A-Z,0-9]\+\ze(/
 
@@ -148,17 +148,6 @@ highlight link nimFunction         Function
 highlight link nimIdentifier       Identifier
 highlight link nimKeyword          Keyword
 highlight link nimNumber           Number
-highlight link nimOP0              Operator0
-highlight link nimOP1              Operator1
-highlight link nimOP10             Operator10
-highlight link nimOP2              Operator2
-highlight link nimOP3              Operator3
-highlight link nimOP3              Operator4
-highlight link nimOP5              Operator5
-highlight link nimOP6              Operator6
-highlight link nimOP7              Operator7
-highlight link nimOP8              Operator8
-highlight link nimOP9              Operator9
 highlight link nimOperatorAll      Operator
 highlight link nimString           String
 highlight link nimStringLiterals   Character

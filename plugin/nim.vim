@@ -30,7 +30,7 @@ function! FindNimModulesPath()
 endfunction
 
 if exists("g:ycm_semantic_triggers")
-    let g:ycm_semantic_triggers["nim"] = ['.', '(']
+    let g:ycm_semantic_triggers["nim"] = ['.']
 endif
 
 let g:nvim_nim_enable_async              = has("nvim")
