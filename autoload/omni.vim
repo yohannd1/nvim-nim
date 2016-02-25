@@ -28,7 +28,7 @@ function! omni#nimsuggest(file, l, c)
     let tempfile = util#WriteMemfile()
 
     let query = "sug " . a:file . ";" . tempfile . ":" . a:l . ":" . a:c
-    let jobcmdstr = g:nvim_nim_exec_nimsuggest . " --v2 --stdin " . a:file
+    let jobcmdstr = g:nvim_nim_exec_nimsuggest . " --threads:on --colors:off --compileOnly --experimental --v2 --stdin " . a:file
     let fullcmd = 'echo -e ' . shellescape(query, 1) . '|' . jobcmdstr
     let completions_raw = util#FilterCompletions(split(system(fullcmd), "\n"))
 
