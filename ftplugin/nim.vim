@@ -23,6 +23,7 @@ command! -buffer -nargs=* -complete=buffer NimRenameSymbol        :call features
 command! -buffer -nargs=* -complete=buffer NimRenameSymbolProject :call features#rename#run(1)
 command! -buffer -nargs=* -complete=buffer NimDebug               :call features#debug#run()
 command! -buffer -nargs=* -complete=buffer NimOutline             :call features#outline#run(0)
+command! -buffer -nargs=* -complete=buffer NimOutlineUpdate       :call features#outline#run(1)
 
 command! -buffer -nargs=* -complete=buffer NimEdb                 :call features#debugger#run()
 command! -buffer -nargs=* -complete=buffer NimEdbStop             :call features#debugger#stop()
@@ -61,7 +62,7 @@ augroup END
 
 augroup nvim_nim_outline
     " autocmd! CursorHold,BufWritePost,FileWritePost *.nim call features#outline#run(1)
-    autocmd! CursorHold,FileWritePost *.nim call features#outline#run(1)
+    autocmd! FileWritePost *.nim call features#outline#run(1)
     autocmd! VimResized,WinEnter * call features#outline#render()
 augroup END
 

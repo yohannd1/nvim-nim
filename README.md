@@ -6,25 +6,26 @@ Nim support for vim and advanced support for neovim. Still in heavy development.
 - Asynchronous
 - Syntax highlighting
     - Normal vim highlight
-    - More intelligent highlight with nimsuggest
-    - Semantic highlighting for specified nim symbol kinds
+    - More intelligent highlight with nimsuggest (**experimental**)
+    - Semantic highlighting for specified nim symbol kinds (**experimental**)
 - Indentation
 - Error checking
     - Using ``:make``
-    - Neomake
+    - [Neomake](https://github.com/benekastah/neomake)
 - Project navigation with nimsuggest
     - Jump to definition
     - Get symbol information (type, module, file, signature, etc...)
     - Find usages (file and/or project)
 - Autocompletion
-    - Nimsuggest omnicompletion
-    - Autocomplete module names
+    - Nimsuggest omnicompletion (still *sync*, deoplete/ycm incoming...)
+    - Autocomplete module names (**experimental**)
 - IDE like stuff
-    - Outline listing all symbols in the module (like tagbar)
     - Jump to documentation in web
     - Refactoring
         - Rename symbol in file or project
-- REPL
+    - Outline listing all symbols in the module (like tagbar)
+        - Jump to outline symbol with unite (**experimental**)
+- REPL (**experimental**)
     - Open repl
     - Send current buffer
     - Send selection
