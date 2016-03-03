@@ -3,6 +3,7 @@ Nim support for vim and advanced support for neovim. Still in heavy development.
 
 
 ## Features
+
 - Asynchronous
 - Syntax highlighting
     - Normal vim highlight
@@ -31,9 +32,15 @@ Nim support for vim and advanced support for neovim. Still in heavy development.
     - Send selection
 
 
-![something](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/pic1.png)
+## Screenshots
+
+![Syntax highlighting](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/screenshots/syntaxhl.png)
+![Autocomplete](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/screenshots/autocomplete.png)
+![Definition](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/screenshots/definition.png)
+![Usages](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/screenshots/usages.png)
 
 
 ## Planned features
+
 - Debugger support
 - Async autocomplete with deoplete (maybe a seperate plugin)
