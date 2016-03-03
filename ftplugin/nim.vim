@@ -39,7 +39,7 @@ command! -buffer -nargs=* -complete=buffer NimREPL                :call features
 command! -buffer -nargs=* -complete=buffer NimREPLEvalFile        :call features#repl#send(getline(0, line("$")))
 command! -buffer -nargs=* -complete=buffer -range NimREPLEval     :call features#repl#send(getline(getpos("'<")[1], getpos("'>")[1]))
 
-if exists('g:nvim_nim_enable_default_binds')
+if g:nvim_nim_enable_default_binds == 1
     nnoremap <buffer> <c-]> :NimDefinition<cr>
     nnoremap <buffer> gf    :call util#goto_file()<cr>
     nnoremap <buffer> gd    :NimDefinition<cr>
@@ -49,7 +49,7 @@ if exists('g:nvim_nim_enable_default_binds')
     nnoremap <buffer> cR    :NimRenameSymbolProject<cr>
 endif
 
-if exists('g:nvim_nim_enable_custom_textobjects')
+if g:nvim_nim_enable_custom_textobjects == 1
     onoremap <buffer> <silent>af :<C-U>call util#SelectNimProc(0)<cr>
     onoremap <buffer> <silent>if :<C-U>call util#SelectNimProc(1)<cr>
     vnoremap <buffer> <silent>af :<C-U>call util#SelectNimProc(0)<cr><Esc>gv
@@ -61,7 +61,6 @@ augroup nvim_nim_highlighter
 augroup END
 
 augroup nvim_nim_outline
-    " autocmd! CursorHold,BufWritePost,FileWritePost *.nim call features#outline#run(1)
     autocmd! FileWritePost *.nim call features#outline#run(1)
     autocmd! VimResized,WinEnter * call features#outline#render()
 augroup END

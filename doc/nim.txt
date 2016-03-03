@@ -7,12 +7,28 @@ CONTENTS                                                   *nim-contents*
     1.Introduction..........................................|NimIntro|
     2.Features..............................................|NimFeatures|
         2.1.Syntax highlighting.............................|NimSyntaxHL|
-        2.2.Nimsuggest interaction..........................|NimSuggest|
-            2.1.Get symbol information......................|NimSInfo|
-            2.2.Goto symbol.................................|NimSGoto|
-            2.3.Find usages.................................|NimSUsages|
-            2.4.Refactoring.................................|NimSRefactoring|
-            2.5.Outline (symbols in a module)...............|NimSOutline|
+        2.2.Commands........................................|NimCommands|
+            2.2.1.NimDebug..................................|NimDebug|
+            2.2.2.NimDefinition.............................|NimDefinition|
+            2.2.3.NimEdb....................................|NimEdb|
+            2.2.4.NimEdbContinue............................|NimEdbContinue|
+            2.2.5.NimEdbIgonore.............................|NimEdbIgonore|
+            2.2.6.NimEdbSkipCurrent.........................|NimEdbSkipCurrent|
+            2.2.7.NimEdbStepInto............................|NimEdbStepInto|
+            2.2.8.NimEdbStepOver............................|NimEdbStepOver|
+            2.2.9.NimEdbStop................................|NimEdbStop|
+            2.2.10.NimEdbToggleBP...........................|NimEdbToggleBP|
+            2.2.11.NimInfo..................................|NimInfo|
+            2.2.12.NimOutline...............................|NimOutline|
+            2.2.13.NimOutlineUpdate.........................|NimOutlineUpdate|
+            2.2.14.NimREPL..................................|NimREPL|
+            2.2.15.NimREPLEval..............................|NimREPLEval|
+            2.2.16.NimREPLEvalFile..........................|NimREPLEvalFile|
+            2.2.17.NimRenameSymbol..........................|NimRenameSymbol|
+            2.2.18.NimRenameSymbolProject...................|NimRenameSymbolProject|
+            2.2.19.NimUsages................................|NimUsages|
+            2.2.20.NimUsagesProject.........................|NimUsagesProject|
+            2.2.21.NimWeb...................................|NimWeb|
     3.Options...............................................|NimOptions|
         3.1.Option summary..................................|NimOptionSummary|
         3.2.Option details..................................|NimOptionDetails|
@@ -63,7 +79,7 @@ When you declare your on proc it gives you the highlight information for
 every usage of that proc. When your routine call fails, your syntax
 highlighting will fail too.
 
-2.1.2Semantic highlighting                                  *NimSyntaxHLI*
+2.1.2.Semantic highlighting                                  *NimSyntaxHLI*
 
 With the nimsuggest highlihgting it is possible to distinguish between
 different symbol types. You can specify which symbol kinds you want to
@@ -81,41 +97,227 @@ with their own.
 
 
 ------------------------------------------------------------------------------
-2.2.Nimsuggest interaction                                  *NimSuggest*
+2.2.Commands                                                *NimCommands*
 
-Nimsuggest is a tool replacing the original nim idetools. This plugin
-aims to use information given from nimsuggest to the fullest.
+2.2.1.NimDebug                                              *NimDebug*
+Lists debug information
+
+2.2.2.NimDefinition                                         *NimDefinition*
+Jumps to the definition of symbol under the cursor. Uses nimsuggest def.
+
+2.2.3.NimEdb (experimental)                                 *NimEdb*
 
 
-------------------------------------------------------------------------------
-2.1.Get symbol information                                  *NimSInfo*
+2.2.4.NimEdbContinue (experimental)                         *NimEdbContinue*
+
+2.2.5.NimEdbIgonore (experimental)                          *NimEdbIgonore*
+
+2.2.6.NimEdbSkipCurrent (experimental)                      *NimEdbSkipCurrent*
+
+2.2.7.NimEdbStepInto (experimental)                         *NimEdbStepInto*
+
+2.2.8.NimEdbStepOver (experimental)                         *NimEdbStepOver*
+
+2.2.9.NimEdbStop (experimental)                             *NimEdbStop*
+
+2.2.10.NimEdbToggleBP (experimental)                        *NimEdbToggleBP*
+
+2.2.11.NimInfo                                              *NimInfo*
+Shows info about the symbol under cursor
+
+2.2.12.NimOutline                                           *NimOutline*
+Shows outline bar
+
+2.2.13.NimOutlineUpdate                                     *NimOutlineUpdate*
+Updates the content of the outline bar
+
+2.2.14.NimREPL (experimental)                               *NimREPL*
+Opens a nim repl inside terminal.
+
+2.2.15.NimREPLEval (experimental)                           *NimREPLEval*
+Evals current selection in the terminal.
+
+2.2.16.NimREPLEvalFile (experimental)                       *NimREPLEvalFile*
+Evals the current file in the terminal.
+
+2.2.17.NimRenameSymbol                                      *NimRenameSymbol*
+Renames symbol under the cursor in the current module.
+
+2.2.18.NimRenameSymbolProject (experimental)                *NimRenameSymbolProject*
+Renames the symbol in all modules visible to main module.
+
+2.2.19.NimUsages                                            *NimUsages*
+List usages of symbol under cursor in the current module.
+
+2.2.20.NimUsagesProject                                     *NimUsagesProject*
+List usages of symbol under cursor in all modules visible from main module.
+
+2.2.21.NimWeb (experimental)                                *NimWeb*
+Open documentation of the current word in browser (works with modules and symbols)
 
 
-
-
-------------------------------------------------------------------------------
-2.2.Goto symbol                                             *NimSGoto*
-
-------------------------------------------------------------------------------
-2.3.Find usages                                             *NimSUsages*
-
-------------------------------------------------------------------------------
-2.4.Refactoring                                             *NimSRefactoring*
-
-------------------------------------------------------------------------------
-2.5.Outline (symbols in a module)                           *NimSOutline*
 
 ==============================================================================
 3.Options                                                   *NimOptions*
 
-------------------------------------------------------------------------------
-3.1.Option summary                                          *NimOptionSummary*
+--------------------------------------------------------------------------------
+                                                       *g:nvim_nim_enable_async*
 
-------------------------------------------------------------------------------
-3.2.Option details                                          *NimOptionDetails*
+    let g:nvim_nim_enable_async = has("nvim")
+
+Allow usage of neovim jobcontrol.
+
+--------------------------------------------------------------------------------
+                                                           *g:nvim_nim_exec_nim*
+
+    let g:nvim_nim_exec_nim = CheckDependency("nim")
+
+Location of nim executable.
+
+--------------------------------------------------------------------------------
+                                                        *g:nvim_nim_exec_nimble*
+
+    let g:nvim_nim_exec_nimble = CheckDependency("nimble")
+
+Location of nimble executable.
+
+--------------------------------------------------------------------------------
+                                                    *g:nvim_nim_exec_nimsuggest*
+
+    let g:nvim_nim_exec_nimsuggest = CheckDependency("nimsuggest")
+
+Location of nimsuggest executable.
+
+--------------------------------------------------------------------------------
+                                                          *g:nvim_nim_exec_bash*
+
+    let g:nvim_nim_exec_bash = CheckDependency("bash")
+
+Location of bash executable.
+
+--------------------------------------------------------------------------------
+                                                           *g:nvim_nim_deps_nim*
+
+    let g:nvim_nim_deps_nim = FindNimModulesPath()
+
+Location of nim modules.
+
+--------------------------------------------------------------------------------
+                                                        *g:nvim_nim_deps_nimble*
+
+    let g:nvim_nim_deps_nimble = FindNimbleModulesPath()
+
+Location of nimble modules.
+
+--------------------------------------------------------------------------------
+                                               *g:nvim_nim_outline_track_symbol*
+
+    let g:nvim_nim_outline_track_symbol = 1
+
+Automatic tracking of active symbol in outline buffer.
+
+- Experimental -
+
+--------------------------------------------------------------------------------
+                                                 *g:nvim_nim_highlighter_enable*
+
+    let g:nvim_nim_highlighter_enable = 0
+
+Use nimsuggest based highlighting.
+
+- Experimental -
+
+--------------------------------------------------------------------------------
+                                                  *g:nvim_nim_highlight_builtin*
+
+    let g:nvim_nim_highlight_builtin = 1
+
+Highlight builtin words.
+
+--------------------------------------------------------------------------------
+                                               *g:nvim_nim_outline_buffer_width*
+
+    let g:nvim_nim_outline_buffer_width = 30
+
+Width of the outline buffer.
+
+--------------------------------------------------------------------------------
+                                                        *g:nvim_nim_repl_height*
+
+    let g:nvim_nim_repl_height = 14
+
+Height of the REPL terminal.
+
+--------------------------------------------------------------------------------
+                                                        *g:nvim_nim_repl_vsplit*
+
+    let g:nvim_nim_repl_vsplit = 0
+
+Split orientation of the repl.
+
+- Experimental -
+
+--------------------------------------------------------------------------------
+                                               *g:nvim_nim_enable_default_binds*
+
+    let g:nvim_nim_enable_default_binds = 1
+
+Enable default command bindings.
+
+--------------------------------------------------------------------------------
+                                          *g:nvim_nim_enable_custom_textobjects*
+
+    let g:nvim_nim_enable_custom_textobjects = 1
+
+Enable custom text objects (like routines with vif).
+
+--------------------------------------------------------------------------------
+                                              *g:nvim_nim_highlighter_semantics*
+
+    let g:nvim_nim_highlighter_semantics = []
+
+Use semantic highlighting of specified symbols. Highlighting groups from
+Semantic[0-19] are used to do the highlighter.  Nimsuggest based highlighting
+should be enabled for this to work.
+
+Available values:
+    skConst
+    skForVar
+    skGlobalLet
+    skGlobalVar
+    skLet
+    skModule
+    skParam
+    skTemp
+    skVar
+
+Example: let g:nvim_nim_highlighter_semantics = ["skConst", "skForVar"]
+
+- Experimental -
+
+
 
 ==============================================================================
 4.Nim Keymappings                                           *NimKeymappings*
+
+Default mappings (disable with |g:nvim_nim_enable_default_binds|):
+
+    nnoremap <buffer> <c-]> :NimDefinition<cr>
+    nnoremap <buffer> gf    :call util#goto_file()<cr>
+    nnoremap <buffer> gd    :NimDefinition<cr>
+    nnoremap <buffer> gt    :NimInfo<cr>
+    nnoremap <buffer> gT    :NimWeb<cr>
+    nnoremap <buffer> cr    :NimRenameSymbol<cr>
+    nnoremap <buffer> cR    :NimRenameSymbolProject<cr>
+
+
+Custom text objects (disable with |g:nvim_nim_enable_custom_textobjects|):
+
+    onoremap <buffer> <silent>af :<C-U>call util#SelectNimProc(0)<cr>
+    onoremap <buffer> <silent>if :<C-U>call util#SelectNimProc(1)<cr>
+    vnoremap <buffer> <silent>af :<C-U>call util#SelectNimProc(0)<cr><Esc>gv
+    vnoremap <buffer> <silent>if :<C-U>call util#SelectNimProc(1)<cr><Esc>gv
+
 
 ==============================================================================
 5.About                                                     *NimAbout*
