@@ -32,6 +32,12 @@ Nim support for vim and advanced support for neovim. Still in heavy development.
     - Send selection
 
 
+## Dependencies
+- Neovim (tested with 1.2)
+- Vim (TODO)
+- Optional: [vim-operator-user](https://github.com/kana/vim-operator-user) for defining routine text object
+
+
 ## Screenshots
 
 ![Syntax highlighting](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/screenshots/syntaxhl.png)
