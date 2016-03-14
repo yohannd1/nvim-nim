@@ -13,7 +13,7 @@ Given nim:
 Do:
   gg=G
 
-Expect:
+Expect nim:
   import
       sequtils,
       streams

@@ -4,11 +4,14 @@
 if [[ ! -d plugins ]]; then
     mkdir plugins
     git clone https://github.com/baabelfish/vader.vim plugins/vader.vim
-    # git clone https://github.com/baabelfish/nvim-nim plugins/nvim-nim
 fi
 
 # Run tests
-nvim -c 'Vader! tests/**/*.vader' > /dev/null
+# Running test
+nvim --version
+echo "Testing"
+nvim -u rc.vim -c 'Vader! tests/**/*.vader'
+# nvim -u rc.vim -c 'Vader! tests/**/*.vader' > /dev/null
 err=$?
 if [ "$err" != "0" ]; then
     cat report.log
