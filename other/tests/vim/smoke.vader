@@ -1,0 +1,9 @@
+Do (file):
+  ifoo\<esc>
+
+Expect (else):
+  foo
+
+
+Execute (something):
+  AssertEqual 1, 2
