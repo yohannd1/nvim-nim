@@ -1,14 +1,19 @@
 #!/bin/bash
 
 # Intall plugins
-mkdir plugins
-git clone https://github.com/baabelfish/vader.vim plugins/vader.vim
-git clone https://github.com/baabelfish/nvim-nim plugins/nvim-nim
+if [[ ! -d plugins ]]; then
+    mkdir plugins
+    git clone https://github.com/baabelfish/vader.vim plugins/vader.vim
+    # git clone https://github.com/baabelfish/nvim-nim plugins/nvim-nim
+fi
 
 # Run tests
-nvim -u rc.vim -c 'Vader! tests/**/*.vader'
+nvim -c 'Vader! tests/**/*.vader' > /dev/null
 err=$?
 if [ "$err" != "0" ]; then
     cat report.log
     exit 1
+else
+    echo ""
+    echo "Great success!"
 fi

@@ -81,9 +81,6 @@ git clone https://github.com/baabelfish/nvim-nim
 tree ~/.config/nvim
 
 
-# echo "Run nim tests"
-# nim c tests/nimsuggest/suggestions.nim
-
 echo "================================================================================"
 echo "Run vim tests"
 cd $current/other

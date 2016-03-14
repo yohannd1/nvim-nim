@@ -62,7 +62,7 @@ augroup END
 
 augroup nvim_nim_outline
     autocmd! FileWritePost *.nim call features#outline#run(1)
-    autocmd! VimResized,WinEnter * call features#outline#render()
+    autocmd! VimResized,WinEnter *.nim call features#outline#render()
 augroup END
 
 if g:nvim_nim_highlighter_enable

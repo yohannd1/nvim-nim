@@ -1,9 +1,36 @@
-Do (file):
-  ifoo\<esc>
+Given nim:
+  echo "hello"
 
-Expect (else):
-  foo
+Do:
+  gg
 
+Then:
+  AssertEqual "nim", &filetype
+  Assert exists(":NimDebug") > 0
+  Assert exists(":NimDefinition") > 0
+  Assert exists(":NimInfo") > 0
+  Assert exists(":NimWeb") > 0
+  Assert exists(":NimUsages") > 0
+  Assert exists(":NimUsagesProject") > 0
+  Assert exists(":NimRenameSymbol") > 0
+  Assert exists(":NimRenameSymbolProject") > 0
+  Assert exists(":NimDebug") > 0
+  Assert exists(":NimOutline") > 0
+  Assert exists(":NimOutlineUpdate") > 0
 
-Execute (something):
-  AssertEqual 1, 2
+Execute:
+  NimInfo
+  NimDebug
+  NimDefinition
+  NimUsages
+  NimUsagesProject
+  NimOutline
+
+Given cpp:
+  std::cout << "hello world" << std::endl;
+
+Do:
+  gg
+
+Then:
+  AssertEqual "cpp", &filetype
