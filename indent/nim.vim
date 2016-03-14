@@ -21,12 +21,20 @@ function! Up()
     return (indent(prevnonblank(v:lnum - 1)) + &tabstop)
 endfunction
 
+function! Hold()
+    return indent(prevnonblank(v:lnum - 1))
+endfunction
+
 function! NimIndent()
     let line = getline(v:lnum)
     let prev = prevnonblank(v:lnum - 1)
     let prevempty = getline(v:lnum - 1) =~ '^\s*$'
     let prev2empty = getline(v:lnum - 2) =~ '^\s*$'
     let prevl = getline(prev)
+
+    if prevl =~ ',\s*$'
+        return Hold()
+    endif
 
     if prev2empty && prevempty
         return
@@ -50,10 +58,6 @@ function! NimIndent()
 
     if prevl =~ '^\<\(const\|var\|let\)\>.*\s*if\s*.*$'
         return Up()
-    endif
-
-    if prevl =~ ',\s*$'
-        return -1
     endif
 
     if prevempty && prevl =~ '\s*\(result\|return\|break\|continue\|raise\)'
