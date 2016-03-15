@@ -23,13 +23,14 @@ function! omni#item_module(name, file, type)
                 \ }
 endfunction
 
+" TODO: Refactor combine (1)
 function! omni#nimsuggest(file, l, c)
     let completions = []
     let tempfile = util#WriteMemfile()
 
     let query = "sug " . a:file . ";" . tempfile . ":" . a:l . ":" . a:c
     let jobcmdstr = g:nvim_nim_exec_nimsuggest . " --threads:on --colors:off --compileOnly --experimental --v2 --stdin " . a:file
-    let fullcmd = 'echo -e ' . shellescape(query, 1) . '|' . jobcmdstr
+    let fullcmd = 'echo -e "' . query . '"|' . jobcmdstr
     let completions_raw = util#FilterCompletions(split(system(fullcmd), "\n"))
 
     for line in completions_raw

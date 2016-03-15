@@ -1,0 +1,15 @@
+Given nim:
+  proc other = "foobar".echo
+  proc hello = "hello".echo
+
+  hello()
+
+Execute:
+  set buftype=""
+  saveas! vader_workbench.nim
+  w!
+  norm G^
+  NimDefinition
+
+Then:
+  AssertEqual 2, line(".")

@@ -36,6 +36,7 @@ function! suggest#CreateJob(useV2, file, callbacks)
 endfunction
 
 
+" TODO: Refactor combine (1)
 function! suggest#NewKnown(command, sync, useV2, file, line, col, handler)
     let result = copy(s:NimSuggest)
     let result.lines = []
@@ -49,7 +50,7 @@ function! suggest#NewKnown(command, sync, useV2, file, line, col, handler)
 
     if !result.isAsync
         let jobcmdstr = g:nvim_nim_exec_nimsuggest . " " . (a:useV2 ? '--v2' : '') . " " . '--stdin' . " " . result.file
-        let fullcmd = 'echo -e ' . shellescape(query, 1) . '|' . jobcmdstr
+        let fullcmd = 'echo -e "' . query . '"|' . jobcmdstr
         let result.lines = util#FilterCompletions(split(system(fullcmd), "\n"))
         if len(result.lines) > 0
             call a:handler.run(result)

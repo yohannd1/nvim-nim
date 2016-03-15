@@ -12,7 +12,6 @@ let s:NimDebugger = {
 
 function! s:NimDebugger.on_stdout(job, chunk)
     for line in a:chunk
-        echom line
         " *** endb| reached edb.nim(4) wat ***
         " let matched = matchlist(line, "\\*\\*\\* endb\|\(.*\)$")
         let matched = matchlist(line, "")

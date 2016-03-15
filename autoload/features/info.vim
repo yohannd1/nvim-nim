@@ -53,13 +53,13 @@ function! features#info#web()
     if modules#isGlobalImport(current_word)
         call util#open_module_doc(current_word, "")
     else
-        call suggest#New("def", 0, 0, s:New(1))
+        call suggest#New("def", !g:nvim_nim_enable_async, 0, s:New(1))
     endif
 endfunction
 
 
 function! features#info#run()
-    call suggest#New("def", 0, 0, s:New(0))
+    call suggest#New("def", !g:nvim_nim_enable_async, 0, s:New(0))
 endfunction
 
 

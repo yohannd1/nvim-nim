@@ -14,7 +14,7 @@ endfunction
 
 
 function! features#definition#run()
-    call suggest#New("def", 0, 0, s:DefinitionImpl)
+    call suggest#New("def", !g:nvim_nim_enable_async, 0, s:DefinitionImpl)
 endfunction
 
 

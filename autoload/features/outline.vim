@@ -250,7 +250,7 @@ function! features#outline#run(isUpdating)
     if !a:isUpdating || s:IsOpen()
         " if s:BufferModified()
         let s:current_buffer = winnr()
-        call suggest#New("outline", 0, 1, s:OutlineImpl)
+        call suggest#New("outline", !g:nvim_nim_enable_async, 1, s:OutlineImpl)
         " else
             " call s:OutlineImpl.run(s:OutlineImpl.cache)
         " endif

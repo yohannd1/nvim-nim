@@ -34,7 +34,7 @@ endfunction
 
 function! features#rename#run(inProject)
     let s:findInProject = a:inProject
-    call suggest#New("use", 0, 1, s:RenameImpl)
+    call suggest#New("use", !g:nvim_nim_enable_async, 1, s:RenameImpl)
 endfunction
 
 

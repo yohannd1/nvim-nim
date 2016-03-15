@@ -75,7 +75,7 @@ endfunction
 
 function! util#JumpToLocation(file, line, col)
     if expand("%:p") != a:file
-        execute ":e " . a:file
+        execute ":e! " . a:file
     endif
     execute ":" . a:line
     execute ":norm " . (a:col) . "|"
@@ -298,7 +298,6 @@ try
         let start_line = start[1]
         let stop_line = stop[1]
         let str = join(getline(start_line, stop_line), "\n")
-        echom str
         call features#repl#send(str)
     endfunction
 catch

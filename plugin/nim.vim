@@ -33,30 +33,78 @@ if exists("g:ycm_semantic_triggers")
     let g:ycm_semantic_triggers["nim"] = ['.']
 endif
 
-let g:nvim_nim_enable_async              = has("nvim")
+if !exists("g:nvim_nim_enable_async")
+    let g:nvim_nim_enable_async = has("nvim")
+endif
 
-let g:nvim_nim_exec_nim                  = CheckDependency("nim")
-let g:nvim_nim_exec_nimble               = CheckDependency("nimble")
-let g:nvim_nim_exec_nimsuggest           = CheckDependency("nimsuggest")
-let g:nvim_nim_exec_bash                 = CheckDependency("bash")
-let g:nvim_nim_deps_nim                  = FindNimModulesPath()
-let g:nvim_nim_deps_nimble               = FindNimbleModulesPath()
+if !exists("g:nvim_nim_exec_nim")
+    let g:nvim_nim_exec_nim = CheckDependency("nim")
+endif
 
-let g:nvim_nim_outline_track_symbol      = 1
-let g:nvim_nim_highlighter_enable        = 0
-let g:nvim_nim_highlight_builtin         = 1
+if !exists("g:nvim_nim_exec_nimble")
+    let g:nvim_nim_exec_nimble = CheckDependency("nimble")
+endif
 
-let g:nvim_nim_outline_buffer            = 1
-let g:nvim_nim_outline_buffer_width      = 30
+if !exists("g:nvim_nim_exec_nimsuggest")
+    let g:nvim_nim_exec_nimsuggest = CheckDependency("nimsuggest")
+endif
 
-let g:nvim_nim_repl_height               = 14
-let g:nvim_nim_repl_vsplit               = 0
+if !exists("g:nvim_nim_exec_bash")
+    let g:nvim_nim_exec_bash = CheckDependency("bash")
+endif
 
-let g:nvim_nim_enable_default_binds      = 1
-let g:nvim_nim_enable_custom_textobjects = 1
+if !exists("g:nvim_nim_deps_nim")
+    let g:nvim_nim_deps_nim = FindNimModulesPath()
+endif
 
-let g:nvim_nim_highlighter_enable        = 0
-let g:nvim_nim_highlight_builtin         = 1
+if !exists("g:nvim_nim_deps_nimble")
+    let g:nvim_nim_deps_nimble = FindNimbleModulesPath()
+endif
+
+if !exists("g:nvim_nim_outline_track_symbol")
+    let g:nvim_nim_outline_track_symbol = 1
+endif
+
+if !exists("g:nvim_nim_highlighter_enable")
+    let g:nvim_nim_highlighter_enable = 0
+endif
+
+if !exists("g:nvim_nim_highlight_builtin")
+    let g:nvim_nim_highlight_builtin = 1
+endif
+
+if !exists("g:nvim_nim_outline_buffer")
+    let g:nvim_nim_outline_buffer = 1
+endif
+
+if !exists("g:nvim_nim_outline_buffer_width")
+    let g:nvim_nim_outline_buffer_width = 30
+endif
+
+if !exists("g:nvim_nim_repl_height")
+    let g:nvim_nim_repl_height = 14
+endif
+
+if !exists("g:nvim_nim_repl_vsplit")
+    let g:nvim_nim_repl_vsplit = 0
+endif
+
+if !exists("g:nvim_nim_enable_default_binds")
+    let g:nvim_nim_enable_default_binds = 1
+endif
+
+if !exists("g:nvim_nim_enable_custom_textobjects")
+    let g:nvim_nim_enable_custom_textobjects = 1
+endif
+
+if !exists("g:nvim_nim_highlighter_enable")
+    let g:nvim_nim_highlighter_enable = 0
+endif
+
+if !exists("g:nvim_nim_highlight_builtin")
+    let g:nvim_nim_highlight_builtin = 1
+endif
+
 " let g:nvim_nim_highlighter_semantics     = ["skConst", "skForVar", "skGlobalVar", "skGlobalLet", "skLet", "skModule", "skParam", "skTemp", "skVar"]
 let g:nvim_nim_highlighter_semantics     = []
 
