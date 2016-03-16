@@ -6,15 +6,18 @@ if [[ ! -d plugins ]]; then
     git clone https://github.com/baabelfish/vader.vim plugins/vader.vim
 fi
 
-# Run tests
-# Running test
-nvim -u rc.vim -c 'Vader! tests/**/*.vader'
-# nvim -u rc.vim -c 'Vader! tests/**/*.vader' > /dev/null
-err=$?
-if [ "$err" != "0" ]; then
-    cat report.log
-    exit 1
-else
-    echo ""
-    echo "Great success!"
-fi
+function testExecutable() {
+    echo "Testing $1"
+    $1 -u rc.vim -c 'Vader! tests/**/*.vader'
+    err=$?
+    if [ "$err" != "0" ]; then
+        cat report.log
+        exit 1
+    else
+        echo ""
+        echo "Great success!"
+    fi
+}
+
+testExecutable "nvim"
+testExecutable "vim"

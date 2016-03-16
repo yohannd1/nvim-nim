@@ -34,7 +34,8 @@ Nim support for vim and advanced support for neovim. Still in heavy development.
 
 ## Dependencies
 - Neovim (tested with 1.2)
-- Vim (TODO)
+- Vim (7.4)
+    - Async support with channels planned
 - Optional: [vim-operator-user](https://github.com/kana/vim-operator-user) for defining routine text object
 
 

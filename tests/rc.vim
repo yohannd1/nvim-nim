@@ -1,3 +1,4 @@
+set nocompatible
 filetype off
 set rtp+=./plugins/vader.vim
 set rtp+=..
