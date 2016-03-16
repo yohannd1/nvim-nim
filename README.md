@@ -37,6 +37,7 @@ Nim support for vim and advanced support for neovim. Still in heavy development.
 - Vim (7.4)
     - Async support with channels planned
 - Optional: [vim-operator-user](https://github.com/kana/vim-operator-user) for defining routine text object
+- Optional: [unite-outline](https://github.com/h1mesuke/unite-outline) for jumping to symbols inside module
 
 
 ## Screenshots
