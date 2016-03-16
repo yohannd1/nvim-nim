@@ -42,9 +42,16 @@ Nim support for vim and advanced support for neovim. Still in heavy development.
 
 ## Screenshots
 
+#### Syntax highlighting
 ![Syntax highlighting](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/misc/screenshots/syntaxhl.png)
+
+#### Autocompletion
 ![Autocomplete](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/misc/screenshots/autocomplete.png)
+
+#### Symbol information and module outline
 ![Definition](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/misc/screenshots/definition.png)
+
+#### Symbol usage listing
 ![Usages](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/misc/screenshots/usages.png)
 
 
