@@ -1,9 +1,9 @@
 language: viml
-script: ./other/travis.sh
+script: ./tests/travis.sh
 cache:
     apt: true
     directories:
-        - other/tmp
+        - tests/tmp
 before_install:
     - sudo apt-get -qq install software-properties-common
     - sudo add-apt-repository -y ppa:neovim-ppa/unstable

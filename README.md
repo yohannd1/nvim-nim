@@ -40,10 +40,10 @@ Nim support for vim and advanced support for neovim. Still in heavy development.
 
 ## Screenshots
 
-![Syntax highlighting](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/screenshots/syntaxhl.png)
-![Autocomplete](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/screenshots/autocomplete.png)
-![Definition](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/screenshots/definition.png)
-![Usages](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/other/screenshots/usages.png)
+![Syntax highlighting](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/misc/screenshots/syntaxhl.png)
+![Autocomplete](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/misc/screenshots/autocomplete.png)
+![Definition](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/misc/screenshots/definition.png)
+![Usages](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/misc/screenshots/usages.png)
 
 
 ## Planned features

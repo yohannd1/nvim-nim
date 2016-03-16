@@ -8,8 +8,6 @@ fi
 
 # Run tests
 # Running test
-nvim --version
-echo "Testing"
 nvim -u rc.vim -c 'Vader! tests/**/*.vader'
 # nvim -u rc.vim -c 'Vader! tests/**/*.vader' > /dev/null
 err=$?
