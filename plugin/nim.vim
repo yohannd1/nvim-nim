@@ -105,8 +105,10 @@ if !exists("g:nvim_nim_highlight_builtin")
     let g:nvim_nim_highlight_builtin = 1
 endif
 
-" let g:nvim_nim_highlighter_semantics     = ["skConst", "skForVar", "skGlobalVar", "skGlobalLet", "skLet", "skModule", "skParam", "skTemp", "skVar"]
-let g:nvim_nim_highlighter_semantics     = []
+if !exists("g:nvim_nim_highlighter_semantics")
+    " let g:nvim_nim_highlighter_semantics     = ["skConst", "skForVar", "skGlobalVar", "skGlobalLet", "skLet", "skModule", "skParam", "skTemp", "skVar"]
+    let g:nvim_nim_highlighter_semantics     = []
+endif
 
 call highlighter#select_highlights(["skProc", "skTemplate", "skType", "skMacro", "skMethod", "skField", "skForVar", "skIterator"])
 

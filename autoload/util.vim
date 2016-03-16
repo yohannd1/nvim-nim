@@ -54,11 +54,14 @@ endfunction
 
 
 function! util#MemFilePath(file)
-    return "/tmp/nvimnvimtemp" . substitute(a:file, "\/", "_-_", "g")
+    if !exists("b:nvim_tmpfile")
+        let b:nvim_tmpfile = tempname()
+    endif
+    return b:nvim_tmpfile
 endfunction
 
 
-"" Writes current buffer into a memfile
+" Writes current buffer into a memfile
 function! util#WriteMemfile()
     let memfile = util#MemFilePath(expand("%:p"))
     call writefile(getline(1, '$'), memfile)
@@ -108,18 +111,18 @@ function! util#ParseV1(line)
     let res = split(a:line, "	")
     let path = split(res[2], "\\.")
     let result = {
-                \ "ctype": res[0],
-                \ "kind": res[1],
-                \ "symbol": res[2],
-                \ "name": res[3],
-                \ "file": res[4],
-                \ "line": res[5],
-                \ "col": res[6],
-                \ "doc": res[7],
-                \ "module": s:GetModule(path),
-                \ "location": join(path[0:-2], "."),
-                \ "lname": path[-1],
-                \ "kindstr": s:idtypes[res[1]][1],
+                \ "ctype":     res[0],
+                \ "kind":      res[1],
+                \ "symbol":    res[2],
+                \ "name":      res[3],
+                \ "file":      res[4],
+                \ "line":      res[5],
+                \ "col":       res[6],
+                \ "doc":       res[7],
+                \ "module":    s:GetModule(path),
+                \ "location":  join(path[0:-2], "."),
+                \ "lname":     path[-1],
+                \ "kindstr":   s:idtypes[res[1]][1],
                 \ "kindshort": s:idtypes[res[1]][0],
                 \ }
     return result
