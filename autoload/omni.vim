@@ -27,14 +27,14 @@ endfunction
 function! omni#nimsuggest(file, l, c)
     let completions = []
     let tempfile = util#WriteMemfile()
-
     let query = "sug " . a:file . ";" . tempfile . ":" . a:l . ":" . a:c
     let jobcmdstr = g:nvim_nim_exec_nimsuggest . " --threads:on --colors:off --compileOnly --experimental --v2 --stdin " . a:file
     let fullcmd = 'echo -e "' . query . '"|' . jobcmdstr
     let completions_raw = util#FilterCompletions(split(system(fullcmd), "\n"))
 
     for line in completions_raw
-        call add(completions, omni#item(util#ParseV2(line)))
+        let parsed = util#ParseV2(line)
+        call add(completions, omni#item(parsed))
     endfor
 
     return completions
@@ -49,9 +49,27 @@ function! omni#modulesuggest(file, l, c)
     return completions
 endfunction
 
+function! s:findStart()
+    let pos = col(".")
+    let cline = getline(".")
+
+    while pos > 1
+        let ch = char2nr(cline[pos - 2])
+        if !((48 <= ch && ch <= 57)
+                    \ || (65 <= ch && ch <= 90)
+                    \ || (97 <= ch && ch <= 122)
+                    \ || ch == 95)
+            break
+        endif
+        let pos = pos - 1
+    endwhile
+
+    return pos - 1
+endfunction
+
 function! omni#nim(findstart, base)
     if a:findstart && empty(a:base)
-        return col('.')
+        return s:findStart()
     endif
 
     let completions = []
