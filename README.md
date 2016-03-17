@@ -31,14 +31,30 @@ Nim support for vim and advanced support for neovim. Still in heavy development.
     - Send current buffer
     - Send selection
 
+## Installation
 
-## Dependencies
-- Neovim (tested with 1.2)
-- Vim (7.4)
-    - Async support with channels planned
+### Dependencies
+- [Nim](http://nim-lang.org/) (0.13.0)
+- [Nimsuggest](https://github.com/nim-lang/nimsuggest) (0.13.0)
+- [Neovim](https://neovim.io/) (1.2) or [Vim](http://www.vim.org/) (7.4)
+    - NOTE: Vim is not currently supporting async features
+
 - Optional: [vim-operator-user](https://github.com/kana/vim-operator-user) for defining routine text object
 - Optional: [unite-outline](https://github.com/h1mesuke/unite-outline) for jumping to symbols inside module
 
+### Configuration
+
+Easiest way to install this plugin is with a plugin manager:
+
+[vim-plug](https://github.com/junegunn/vim-plug)
+```viml
+Plug "baabelfish/nvim-nim"
+```
+
+[neobundle](https://github.com/Shougo/neobundle.vim)
+```viml
+NeoBundle "baabelfish/nvim-nim"
+```
 
 ## Screenshots
 
