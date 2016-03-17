@@ -14,7 +14,7 @@ function! CheckDependency(command)
         echoerr "Not found: " . a:command
         finish
     endif
-    return exepath(a:command)
+    return a:command
 endfunction
 
 
