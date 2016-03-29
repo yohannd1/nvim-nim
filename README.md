@@ -5,7 +5,7 @@ Nim support for vim and advanced support for neovim. Still in heavy development.
 ## Features
 
 - Asynchronous
-- Syntax highlighting
+- Up to date syntax highlighting
     - Normal vim highlight
     - More intelligent highlight with nimsuggest (**experimental**)
     - Semantic highlighting for specified nim symbol kinds (**experimental**)
@@ -33,6 +33,8 @@ Nim support for vim and advanced support for neovim. Still in heavy development.
 
 ## Installation
 
+This plugin doesn't work if [zah's nim plugin](https://github.com/zah/nim.vim) is installed.
+
 ### Dependencies
 - Linux (OS X and Windows untested at the moment)
 - [Nim](http://nim-lang.org/) (0.13.0)
@@ -42,6 +44,7 @@ Nim support for vim and advanced support for neovim. Still in heavy development.
 
 - Optional: [vim-operator-user](https://github.com/kana/vim-operator-user) for defining routine text object
 - Optional: [unite-outline](https://github.com/h1mesuke/unite-outline) for jumping to symbols inside module
+- Optional: [YouCompleteMe](https://github.com/Valloric/YouCompleteMe) for jumping to symbols inside module
 
 ### Configuration
 
@@ -76,6 +79,12 @@ git clone https://github.com/baabelfish/nvim-nim ~/.vim/bundle/nvim-nim
 #### Symbol usage listing
 ![Usages](https://raw.githubusercontent.com/baabelfish/nvim-nim/master/misc/screenshots/usages.png)
 
+## Caveats (Will be fixed asap)
+- No support for main/project file yet
+- Launching new nimsuggest for every completion
+- Using stdio to communicate with nimsuggest
+- Docstring is still missing
+- Completion is a bit wonky with plain vim. Works well with [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
 
 ## Planned features
 
