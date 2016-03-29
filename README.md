@@ -45,6 +45,7 @@ This plugin doesn't work if [zah's nim plugin](https://github.com/zah/nim.vim) i
 - Optional: [vim-operator-user](https://github.com/kana/vim-operator-user) for defining routine text object
 - Optional: [unite-outline](https://github.com/h1mesuke/unite-outline) for jumping to symbols inside module
 - Optional: [YouCompleteMe](https://github.com/Valloric/YouCompleteMe) for jumping to symbols inside module
+- Optional: [Neomake](https://github.com/benekastah/neomake) for compilation errors
 
 ### Configuration
 
