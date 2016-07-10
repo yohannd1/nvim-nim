@@ -221,7 +221,7 @@ Automatic tracking of active symbol in outline buffer.
 --------------------------------------------------------------------------------
                                                  *g:nvim_nim_highlighter_enable*
 
-    let g:nvim_nim_highlighter_enable = 0
+    let g:nvim_nim_highlighter_enable = 1
 
 Use nimsuggest based highlighting.
 
@@ -345,3 +345,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
