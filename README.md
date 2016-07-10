@@ -1,6 +1,24 @@
-# nvim-nim [![Build Status](https://travis-ci.org/baabelfish/nvim-nim.svg?branch=master)](https://travis-ci.org/baabelfish/nvim-nim)
+# nvim-nim
 Nim support for vim and advanced support for neovim. Still in heavy development.
 
+## About this fork
+
+This fork is mainly for backing up my temporary fixes (a.k.a. dirty fixes) to
+some bugs that I discovered which cannot be fixed properly somehow at the time.
+Or some modifications that suit my need only, which does no apply to
+general audience.
+
+This fork is NOT intended to be merged upstream.
+
+## Modifications of this fork
+
+- improved nimsuggest highlighting
+    - do not highlight operators for avoiding ugliness
+    - re-calculate identifier length to fix [nim-lang/nimsuggest#24](https://github.com/nim-lang/nimsuggest/issues/24)
+    - enable nimsuggest highlighting by default
+- modified `hi link`s for syntax highlighting
+    - `hi link nimPragma Title`
+    - `hi link nimPragmas Macro`
 
 ## Features
 
@@ -91,3 +109,4 @@ git clone https://github.com/baabelfish/nvim-nim ~/.vim/bundle/nvim-nim
 
 - Debugger support
 - Async autocomplete with deoplete (maybe a seperate plugin)
+
