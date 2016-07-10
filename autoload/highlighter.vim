@@ -94,6 +94,13 @@ function! s:NimHighlighter.on_exit()
             let c -= s
         endif
 
+        let id_end = matchend(str, "^[a-zA-Z0-9_]\\+", c)
+        if id_end == -1
+            " skips highlighting of symbols
+            continue
+        endif
+        let s = id_end - c + 1
+
         if has_key(s:highlights, ctype)
             if has_key(semantics_set, ctype)
                 call add(b:highlights, matchaddpos("Semantic" . abs(util#djb(strpart(str, c - 1, s))) % 20, [[line, c, s]]))
@@ -112,7 +119,7 @@ function highlighter#New()
     let result.tempfile = util#WriteMemfile()
     let result.job = jobstart([g:nvim_nim_exec_nimsuggest, '--v2', '--stdin', result.file], result)
     let cmd = "highlight " . result.file . ";" . result.tempfile . ":1:1\nquit\n"
-    call jobsend(result.job, cmd) 
+    call jobsend(result.job, cmd)
 
     if !exists("b:highlights")
         let b:highlights = []
@@ -140,3 +147,4 @@ endfunction
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
+
