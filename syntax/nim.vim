@@ -151,7 +151,7 @@ highlight link nimNumber           Number
 highlight link nimOperatorAll      Operator
 highlight link nimString           String
 highlight link nimStringLiterals   Character
-highlight link nimPragmas          Character
+highlight link nimPragmas          Macro
 highlight link nimPragma           Title
 highlight link nimSuffix           SpecialChar
 highlight link nimTodo             Todo
