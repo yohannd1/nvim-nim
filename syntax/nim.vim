@@ -152,6 +152,7 @@ highlight link nimOperatorAll      Operator
 highlight link nimString           String
 highlight link nimStringLiterals   Character
 highlight link nimPragmas          Character
+highlight link nimPragma           Title
 highlight link nimSuffix           SpecialChar
 highlight link nimTodo             Todo
 highlight link nimToken            Delimiter
@@ -194,3 +195,4 @@ if len(g:nvim_nim_highlighter_semantics) > 0
     hi Semantic18 guifg=#fcbc89 gui=none
     hi Semantic19 guifg=#7c78c9 gui=none
 endif
+
