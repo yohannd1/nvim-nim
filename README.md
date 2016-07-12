@@ -14,7 +14,7 @@ This fork is NOT intended to be merged upstream.
 
 - improved nimsuggest highlighting
     - do not highlight operators for avoiding ugliness
-    - re-calculate identifier length to fix [nim-lang/nimsuggest#24](https://github.com/nim-lang/nimsuggest/issues/24)
+    - re-calculate identifier length to dirty fix [nim-lang/nimsuggest#24](https://github.com/nim-lang/nimsuggest/issues/24)
     - enable nimsuggest highlighting by default
 - modified `hi link`s for syntax highlighting
     - `hi link nimPragma Title`
