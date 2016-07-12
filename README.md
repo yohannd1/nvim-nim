@@ -19,6 +19,7 @@ This fork is NOT intended to be merged upstream.
 - modified `hi link`s for syntax highlighting
     - `hi link nimPragma Title`
     - `hi link nimPragmas Macro`
+- use the indent file from `zah/nim.vim`
 
 ## Features
 
