@@ -114,6 +114,7 @@ call highlighter#select_highlights(["skProc", "skTemplate", "skType", "skMacro",
 
 au BufNewFile,BufRead *.nim setlocal filetype=nim
 au BufNewFile,BufRead *.nims setlocal filetype=nims
+au BufNewFile,BufRead *.nimble setlocal filetype=nims
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
