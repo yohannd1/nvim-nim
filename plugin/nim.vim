@@ -66,7 +66,7 @@ if !exists("g:nvim_nim_outline_track_symbol")
 endif
 
 if !exists("g:nvim_nim_highlighter_enable")
-    let g:nvim_nim_highlighter_enable = 0
+    let g:nvim_nim_highlighter_enable = 1
 endif
 
 if !exists("g:nvim_nim_highlight_builtin")
@@ -97,10 +97,6 @@ if !exists("g:nvim_nim_enable_custom_textobjects")
     let g:nvim_nim_enable_custom_textobjects = 1
 endif
 
-if !exists("g:nvim_nim_highlighter_enable")
-    let g:nvim_nim_highlighter_enable = 0
-endif
-
 if !exists("g:nvim_nim_highlight_builtin")
     let g:nvim_nim_highlight_builtin = 1
 endif
@@ -118,3 +114,4 @@ au BufNewFile,BufRead *.nimble setlocal filetype=nims
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
+
